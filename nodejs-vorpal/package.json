@@ -1,0 +1,9 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "vorpal": "^1.5.5"
+  },
+  "devDependencies": {}
+}

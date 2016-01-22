@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-date-input-directive-production</title>
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.1/angular.min.js"></script>
+
+
+
+</head>
+<body ng-app="dateInputExample">
+  <script>
+  // Plunker: http://plnkr.co/edit/BBr668?p=preview
+  //
+  function createDateParser(regexp, mapping) {
+    var ISO_DATE_REGEXP = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/;
+    return function(iso, date) {
+      var parts, map;
+
+      if (angular.isDate(iso)) {
+        return iso;
+      }
+
+      if (angular.isString(iso)) {
+        // When a date is JSON'ified to wraps itself inside of an extra
+        // set of double quotes. This makes the date parsing code unable
+        // to match the date string and parse it as a date.
+        if (iso.charAt(0) == '"' && iso.charAt(iso.length - 1) == '"') {
+          iso = iso.substring(1, iso.length - 1);
+        }
+        if (ISO_DATE_REGEXP.test(iso)) {
+          return new Date(iso);
+        }
+        regexp.lastIndex = 0;
+        parts = regexp.exec(iso);
+
+        if (parts) {
+          parts.shift();
+          if (date) {
+            map = {
+              yyyy: date.getFullYear(),
+              MM: date.getMonth() + 1,
+              dd: date.getDate(),
+              HH: date.getHours(),
+              mm: date.getMinutes(),
+              ss: date.getSeconds(),
+              sss: date.getMilliseconds() / 1000
+            };
+          } else {
+            map = { yyyy: 1970, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, sss: 0 };
+          }
+
+          angular.forEach(parts, function(part, index) {
+            if (index < mapping.length) {
+              map[mapping[index]] = +part;
+            }
+          });
+          return new Date(map.yyyy, map.MM - 1, map.dd, map.HH, map.mm, map.ss || 0, map.sss * 1000 || 0);
+        }
+      }
+
+      return NaN;
+    };
+  };
+
+   angular.module('dateInputExample', [])
+     .controller('DateController', ['$scope', function($scope) {
+       $scope.add=function(){
+         $scope.example = {
+         value: new Date(2016, 0, 15)};
+       }
+       $scope.add();
+       console.log('app')
+     }])
+    .directive('dateMinMaxValidate', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elem, attr, ctrl) {
+          var DATE_REGEXP = /^(\d{4})-(\d{2})-(\d{2})$/;
+          var parseDate = createDateParser(DATE_REGEXP, ['yyyy', 'MM', 'dd']);
+
+          var minVal = null;
+          var maxVal = null;
+
+          if (angular.isDefined(attr.minDate)) {
+              minVal = parseObservedDateValue(attr.minDate);
+          }
+          if (angular.isDefined(attr.maxDate)) {
+              maxVal = parseObservedDateValue(attr.maxDate);
+          }
+
+          scope.$watch(attr.ngModel, function(newValue) {
+            console.log("Changed to " + newValue);
+            if (minVal) {
+              valid = !isValidDate(newValue) || angular.isUndefined(minVal) || parseDate(newValue) >= minVal;
+              if (!valid) {
+                //scope.example.value = minVal;
+                ctrl.$setViewValue(attr.minDate);
+                ctrl.$render();
+              }
+            }
+            if (maxVal) {
+              valid = !isValidDate(newValue) || angular.isUndefined(maxVal) || parseDate(newValue) <= maxVal;
+              if (!valid) {
+                //scope.example.value = maxVal;
+                ctrl.$setViewValue(attr.maxDate);
+                ctrl.$render();
+              }
+            }
+          });
+
+          function isValidDate(value) {
+            // Invalid Date: getTime() returns NaN
+            return value && !(value.getTime && value.getTime() !== value.getTime());
+          }
+
+          function parseObservedDateValue(val) {
+            return angular.isDefined(val) && !angular.isDate(val) ? parseDate(val) || undefined : val;
+          }
+        }
+    };
+});
+</script>
+<form name="myForm" ng-controller="DateController as dateCtrl">
+   <label for="exampleInput">pick a date out of range (2016-01-15 : 2016-02-10) or that does not exist :</label>
+   <input ng-show="example.value" type="date" id="exampleInput" name="input" ng-model="example.value"
+       placeholder="yyyy-MM-dd" min-date="2016-01-15" max-date="2016-02-10" required date-min-max-validate />
+   <div role="alert">
+      <button ng-show="!example.value" ng-click="add()">add the date</button>
+    </div>
+    <tt>value = {{example.value ? example.value  : "example.value has been destroyed"}}</tt><br/>
+</form>
+</body>
+</html>

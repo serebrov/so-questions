@@ -1,0 +1,18 @@
+session.vim
+
+#ignore node modules
+node_modules/
+
+#ignore temp files
+error.tmp
+*.bak
+tags
+*.tags
+dump.rdb
+*.orig
+.DS_Store
+.ctags
+
+#compiled code
+*.pyc
+*.class
