@@ -2,6 +2,7 @@ session.vim
 
 #ignore node modules
 node_modules/
+git-local-clone/
 
 #ignore temp files
 error.tmp
