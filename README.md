@@ -1,5 +1,8 @@
 Various tests and stackoverflow questions
 
+- [Cloned from a colleague's computer, now pull from Bitbucket still downloads a lot](http://stackoverflow.com/q/34828587/4612064)
+ - Shell script to reproduce: [./git-local-clone/test.sh]
+
 - [Flask-SQLAlchemy many-to-many adjacency list changes after commit](http://stackoverflow.com/q/34945722/4612064)
  - Code: [./sql-alchemy/many_many_save_issue.py](./sql-alchemy/many_many_save_issue.py)
 

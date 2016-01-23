@@ -1,5 +1,12 @@
 # Change this to your repository url
-BITBUCKET_URL=git@bitbucket.org:user/project 
+BITBUCKET_URL=git@bitbucket.org:serebrov/test-git-clone.git
+BITBUCKET_URL_HTTP=https://serebrov@bitbucket.org/serebrov/test-git-clone.git
+
+SCRIPT_PATH=`dirname $0`
+cd $SCRIPT_PATH
+
+rm -rf $SCRIPT_PATH/project
+rm -rf $SCRIPT_PATH/mycopy
 
 # git clone git://git.kernel.org/pub/scm/git/git.git 
 # git checkout v1.9.4
@@ -13,7 +20,7 @@ GIT194=git
 
 $GIT194 --version
 
-$GIT194 clone $BITBUCKET_URL project
+$GIT194 clone $BITBUCKET_URL_HTTP project
 # Cloning into 'project'...
 # Warning: Permanently added the RSA host key for IP address 'xxx.xxx.xxx.xxx' to the list of known hosts.
 # remote: Counting objects: 163, done.
