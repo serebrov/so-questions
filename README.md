@@ -1,5 +1,8 @@
 Various tests and stackoverflow questions
 
+- [Flask-SQLAlchemy mixin with CheckConstraint in __table_args__ results with errors](http://stackoverflow.com/q/34974021/4612064)
+ - Code: [./sql-alchemy/constraint_mixin.py]
+
 - [Cloned from a colleague's computer, now pull from Bitbucket still downloads a lot](http://stackoverflow.com/q/34828587/4612064)
  - Shell script to reproduce: [./git-local-clone/test.sh]
 
