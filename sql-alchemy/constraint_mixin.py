@@ -42,7 +42,7 @@ class FilteredConnectionType(FilteringMixin, db.Model):
                                 default=CONNECTION_TYPES['cellular'])
 
     @declared_attr
-    def table_args(cls):
+    def __table_args__(cls):
         return (
             db.CheckConstraint(cls.connection_type.in_(cls.CONNECTION_TYPES.values())),
         ) + FilteringMixin.constraint(cls)
