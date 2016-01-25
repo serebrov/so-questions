@@ -1,7 +1,12 @@
 Various tests and stackoverflow questions
 
+- [PHP - How do you find duplicate value groupings in an array](http://stackoverflow.com/q/21295384/4612064)
+ - Actually the task is to split the original array into the longest adjacent non-overlapping patterns
+ - Example: ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'c', 'd'] -> [['a', 'b', 'a', 'b'], ['a', 'b', 'a', 'b'], ['c'], ['d']]
+ - Code: [./php-array-patterns/test.php](./php-array-patterns/test.php)
+
 - [Flask-SQLAlchemy mixin with CheckConstraint in __table_args__ results with errors](http://stackoverflow.com/q/34974021/4612064)
- - Code: [./sql-alchemy/constraint_mixin.py]
+ - Code: [./sql-alchemy/constraint_mixin.py](./sql-alchemy/constraint_mixin.py)
 
 - [Cloned from a colleague's computer, now pull from Bitbucket still downloads a lot](http://stackoverflow.com/q/34828587/4612064)
  - Shell script to reproduce: [./git-local-clone/test.sh]
