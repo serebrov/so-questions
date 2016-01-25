@@ -5,6 +5,9 @@ Various tests and stackoverflow questions
  - Example: ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'c', 'd'] -> [['a', 'b', 'a', 'b'], ['a', 'b', 'a', 'b'], ['c'], ['d']]
  - Code: [./php-array-patterns/test.php](./php-array-patterns/test.php)
 
+- [Replace the specific RGB color with another image using PHP](http://stackoverflow.com/a/34979853/4612064)
+ - Code [./php-image-background/convert.php](./php-image-background/convert.php)
+
 - [Flask-SQLAlchemy mixin with CheckConstraint in __table_args__ results with errors](http://stackoverflow.com/q/34974021/4612064)
  - Code: [./sql-alchemy/constraint_mixin.py](./sql-alchemy/constraint_mixin.py)
 

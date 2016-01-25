@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Splits an $array into chunks of $chunk_size.
+ * Returns number of repeats, start index and chunk which has
+ * max number of ajacent repeats.
+ */
 function getRepeatCount($array, $chunk_size) {
     $parts = array_chunk($array, $chunk_size);
     $maxRepeats = 1;
@@ -29,6 +34,10 @@ function getRepeatCount($array, $chunk_size) {
     return array($maxRepeats, $maxIdx*$chunk_size, $maxChunk);
 }
 
+/*
+ * Finds longest pattern in the $array.
+ * Returns number of repeats, start index and pattern itself.
+ */
 function findLongestPattern($array) {
     $start = 0;
     $maxLen = 0;
@@ -54,6 +63,9 @@ function findLongestPattern($array) {
     return array($maxRepeats, $start, $maxPattern);
 }
 
+/*
+ * Splits $array into longest adjacent non-overlapping parts.
+ */
 function splitToPatterns($array) {
     //echo json_encode($array);
     if (count($array) < 1) {
