@@ -22,10 +22,12 @@ class FilteringMixin(object):
         return db.Column(db.SmallInteger, nullable=False,
                          default=cls.FILTER_TYPES['whitelist'])
 
-    @classmethod
-    def constraint(cls, child):
+    @declared_attr
+    def __table_args__(cls):
         return (
-             db.CheckConstraint(child.filter_type.in_(cls.FILTER_TYPES.values())),
+             db.CheckConstraint(
+                 'filter_type in (%s)' %
+                 ','.join(str(t) for t in cls.FILTER_TYPES.values())),
         )
 
 
@@ -45,7 +47,7 @@ class FilteredConnectionType(FilteringMixin, db.Model):
     def __table_args__(cls):
         return (
             db.CheckConstraint(cls.connection_type.in_(cls.CONNECTION_TYPES.values())),
-        ) + FilteringMixin.constraint(cls)
+        ) + FilteringMixin.__table_args__
 
 
 if __name__ == "__main__":
