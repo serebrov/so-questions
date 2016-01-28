@@ -1,5 +1,11 @@
 Various tests and stackoverflow questions
 
+- [Angular throws errors whenever JQuery is included](http://stackoverflow.com/questions/34904109/angular-throws-errors-whenever-jquery-is-included)
+  - Code: [./angular-jquery-load-problem](./angular-jquery-load-problem)
+
+- [Redmine: Copy issue multiple times](http://stackoverflow.com/a/34995100/4612064)
+  - Implementation idea of how to add a multiple copy feature to the Redmine
+
 - [PHP - How do you find duplicate value groupings in an array](http://stackoverflow.com/q/21295384/4612064)
  - Actually the task is to split the original array into the longest adjacent non-overlapping patterns
  - Example: ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'c', 'd'] -> [['a', 'b', 'a', 'b'], ['a', 'b', 'a', 'b'], ['c'], ['d']]

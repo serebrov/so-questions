@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+
+<!--body ng-app="ByobApp"-->
+<body>
+
+    <nav ng-controller="ClickCtrl as ctrl" class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="#">Kellogg's Build Your Own Burger</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a ui-sref="home" ng-click="ctrl.doClick()">Home</a></li>
+            <li><a ui-sref="byob">Build</a></li>
+        </ul>
+    </nav>
+
+    <div class="container" ng-controller="TestCtrl as ctrl">
+        @RenderBody()
+    </div>
+    <script src="/scripts/jspm_packages/system.js"></script>
+    <script src="/scripts/config.js"></script>
+    <script>
+        System.baseURL = "/scripts";
+        System['import']('app/app').then(function() {
+            angular.element(document).ready(function () {
+              angular.bootstrap(document, ['ByobApp']);
+            });
+        });
+
+    </script>
+    @RenderSection("scripts", true)
+
+</body>
+</html>
