@@ -4,6 +4,8 @@ var async = require('async');
 var request = require('request');
 var cheerio = require('cheerio');
 
+var myModule = require('./mymodule');
+
 var app = express.createServer();
 app.successCount = 0;
 app.errorCount = 0;
@@ -50,7 +52,9 @@ app.get('/asynctest', function(req, res) {
   });
 });
 
-app.listen(3000, function() {
+app.get('/testmod', myModule.authenticateUser);
+
+app.listen(3007, function() {
   console.log(
     "Express server listening on port %d in %s mode",
     app.address().port, app.settings.env

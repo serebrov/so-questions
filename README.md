@@ -1,5 +1,8 @@
 Various tests and stackoverflow questions
 
+- [How to call javascript function in module](http://stackoverflow.com/q/35090950/4612064)
+  - Code: [./require-js-module/](./require-js-module/)
+
 - [Angular throws errors whenever JQuery is included](http://stackoverflow.com/questions/34904109/angular-throws-errors-whenever-jquery-is-included)
   - Code: [./angular-jquery-load-problem](./angular-jquery-load-problem)
 
