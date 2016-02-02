@@ -9,29 +9,20 @@ function getRepeatCount($array, $chunk_size) {
     $parts = array_chunk($array, $chunk_size);
     $maxRepeats = 1;
     $maxIdx = 0;
-    $maxChunk = $parts[0];
-    for ($i = 0; $i < count($parts)-1; $i++) {
-        $repeats = 1;
-        $idx = $i;
-        $prev = $parts[$idx];
-        $current = $parts[$idx];
-        do {
-            $idx++;
-            $current = $parts[$idx];
-            // if chunks equal
-            if (json_encode($prev) === json_encode($current)) {
-                $repeats += 1;
-                if ($repeats > $maxRepeats) {
-                    $maxRepeats = $repeats;
-                    $maxIdx = $i;
-                    $maxChunk = $current;
-                }
-            } else {
-                break;
+    $repeats = 1;
+    $len = count($parts);
+    for ($i = 0; $i < $len-1; $i++) {
+        if ($parts[$i] === $parts[$i+1]) {
+            $repeats += 1;
+            if ($repeats > $maxRepeats) {
+                $maxRepeats = $repeats;
+                $maxIdx = $i - ($repeats-2);
             }
-        } while($idx < count($parts)-1);
+        } else {
+            $repeats = 1;
+        }
     }
-    return array($maxRepeats, $maxIdx*$chunk_size, $maxChunk);
+    return array($maxRepeats, $maxIdx*$chunk_size, $parts[$maxIdx]);
 }
 
 /*
@@ -39,42 +30,27 @@ function getRepeatCount($array, $chunk_size) {
  * Returns number of repeats, start index and pattern itself.
  */
 function findLongestPattern($array) {
-    $start = 0;
-    $maxLen = 0;
-    $maxRepeats = 0;
-    $maxPattern = array();
     $len = count($array);
-    for ($window = 1; $window <= $len/2; $window++) {
-      for ($i = 0; $i < $len-$window; $i++) {
-          list($repeats, $idx, $pattern) = getRepeatCount(
-              array_slice($array, $i), $window
-          );
-        if ($window > $maxLen) {
-            //if (!$maxRepeats || $repeats >= $maxRepeats) {
-            if (!$maxRepeats || $repeats > 1) {
-                $maxLen = $window;
-                $maxRepeats = $repeats;
-                $maxPattern = $pattern;
-                $start = $idx + $i;
-            }
+    for ($window = floor($len/2); $window >= 1; $window--) {
+      $num_chunks = ceil($len/$window);
+      for ($i = 0; $i < $num_chunks; $i++) {
+        list($repeats, $idx, $pattern) = getRepeatCount(
+          array_slice($array, $i), $window
+        );
+        if ($repeats > 1) {
+            return array($repeats, $idx+$i, $pattern);
         }
       }
     }
-    return array($maxRepeats, $start, $maxPattern);
+    return array(1, 0, [$array[0]]);
 }
 
 /*
  * Splits $array into longest adjacent non-overlapping parts.
  */
 function splitToPatterns($array) {
-    //echo json_encode($array);
     if (count($array) < 1) {
         return $array;
-    }
-    if (count($array) < 2) {
-        return array(
-            array('number'=>1, 'values' => $array)
-        );
     }
     list($repeats, $start, $pattern) = findLongestPattern($array);
     $end = $start + count($pattern) * $repeats;
@@ -95,7 +71,6 @@ function isEquals($expected, $actual) {
         echo 'Equals check failed'.PHP_EOL;
         echo 'expected: '.$exp_str.PHP_EOL;
         echo 'actual  : '.$act_str.PHP_EOL;
-        //var_dump($actual);
     }
     return $equals;
 }
@@ -189,4 +164,55 @@ assert(isEquals(
         array('number'=>1, 'values'=>array('a')),
     ),
     splitToPatterns(['x','x','y','x','b','x','b','a'])
+));
+// one, two, one, two, one, two, one, two
+// [                ] [                 ]
+assert(isEquals(
+    array(
+        array('number'=>2, 'values'=>array('one', 'two', 'one', 'two')),
+    ),
+    splitToPatterns(['one', 'two', 'one', 'two', 'one', 'two', 'one', 'two'])
+));
+// 'one', 'two', 'one', 'two', 'three', 'four', 'one', 'two', 'three', 'four'
+// [   ]  [   ]  [                           ]  [                           ]
+assert(isEquals(
+    array(
+        array('number'=>1, 'values'=>array('one')),
+        array('number'=>1, 'values'=>array('two')),
+        array('number'=>2, 'values'=>array('one','two','three','four')),
+    ),
+    splitToPatterns(['one', 'two', 'one', 'two', 'three', 'four', 'one', 'two', 'three','four'])
+));
+
+/*     'a', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'c', */
+/*     [  ] [                 ] [                 ] [ ]  */
+assert(isEquals(
+    array(
+        array('number'=>1, 'values'=>array('a')),
+        array('number'=>2, 'values'=>array('a','b','a','b')),
+        array('number'=>1, 'values'=>array('c')),
+    ),
+    splitToPatterns(['a','a','b','a','b','a','b','a','b','c'])
+));
+
+/* 'a', 'b', 'a', 'b', 'c', 'd', 'a', 'b', 'a', 'b', 'a', 'b' */
+// [      ]  [      ]  [ ]  [ ]  [      ] [       ]  [      ]
+assert(isEquals(
+    array(
+        array('number'=>2, 'values'=>array('a', 'b')),
+        array('number'=>1, 'values'=>array('c')),
+        array('number'=>1, 'values'=>array('d')),
+        array('number'=>3, 'values'=>array('a','b')),
+    ),
+    splitToPatterns(['a', 'b', 'a', 'b', 'c', 'd', 'a', 'b', 'a', 'b', 'a', 'b'])
+));
+/* 'a', 'c', 'd', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'c', */
+/* [  ] [  ] [  ] [                 ] [                 ] [ ]  */
+assert(isEquals(
+    array(
+        array('number'=>1, 'values'=>array('a')),
+        array('number'=>2, 'values'=>array('a','b','a','b')),
+        array('number'=>1, 'values'=>array('c')),
+    ),
+    splitToPatterns(['a','a','b','a','b','a','b','a','b','c'])
 ));
