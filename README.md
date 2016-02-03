@@ -1,5 +1,8 @@
 Various tests and stackoverflow questions
 
+- [Is it possible to update a already created job in kue node js](http://stackoverflow.com/questions/34919808/is-it-possible-to-update-a-already-created-job-in-kue-node-js)
+  - Code [./nodejs-kue-test/](./nodejs-kue-test/)
+
 - [Angular. How can I filter dynamic array in controller?](http://stackoverflow.com/a/35186340/4612064)
   - Code: [./angular-filter/](./angular-filter/)
 
