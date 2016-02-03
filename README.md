@@ -1,5 +1,20 @@
 Various tests and stackoverflow questions
 
+- [Angular. How can I filter dynamic array in controller?](http://stackoverflow.com/a/35186340/4612064)
+  - Code: [./angular-filter/](./angular-filter/)
+
+- [OOP Tactics with the Angular MVC Framework?](http://stackoverflow.com/a/35184031/4612064)
+
+- [array type property shared between multiple objects in javascript](http://stackoverflow.com/a/35178442/4612064)
+
+- [How to make sure parent method is always called before child overrides it in a decorator?](http://stackoverflow.com/a/35141321/4612064)
+
+- [Proper way to pass values (directly pass dependencies vs pass an object which has the dependencies)](http://stackoverflow.com/a/35132205/4612064)
+
+- [Does omitting super() and/or *weakening* preconditions violate Liskov Substitution Principle?](http://stackoverflow.com/a/35100019/4612064)
+
+- [What design patterns can help model objects whose behaviors change dynamically, or objects with many optional behaviors?](http://stackoverflow.com/a/35114637/4612064)
+
 - [How to call javascript function in module](http://stackoverflow.com/q/35090950/4612064)
   - Code: [./require-js-module/](./require-js-module/)
 
