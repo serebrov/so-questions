@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-date-input-directive-production</title>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.1/angular.min.js"></script>
+</head>
+<body ng-app="filterExample">
+    <script>
+     angular.module('filterExample', [])
+       .filter('myFilter', function() {
+         return function(input) {
+           var output = [];
+           for (var idx in input) {
+             var item = input[idx];
+             if (item != 'row2') {
+               output.push(item.toUpperCase());
+             }
+           }
+           return output;
+         };
+       })
+       .controller('MyController', ['$filter', function($filter) {
+         this.data = ['row1', 'row2', 'row3'];
+         this.getFilteredData = function(input) {
+           return $filter('myFilter')(this.data);
+         };
+       }]);
+  </script>
+  <h2>Initial data</h2>
+  <table ng-controller="MyController as ctrl">
+    <tr ng-repeat="row in ctrl.data">
+      <td>{{row}}</td>
+    </tr>
+  </table>
+  <h2>Filtered data, use filter in the template</h2>
+  <table ng-controller="MyController as ctrl">
+    <tr ng-repeat="row in ctrl.data | myFilter">
+      <td>{{row}}</td>
+    </tr>
+  </table>
+  <h2>Filtered data, filter data in the function</h2>
+  <table ng-controller="MyController as ctrl">
+    <tr ng-repeat="row in ctrl.getFilteredData()">
+      <td>{{row}}</td>
+    </tr>
+  </table>
+</body>
+</html>
