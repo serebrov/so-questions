@@ -1,5 +1,7 @@
 Various tests and stackoverflow questions
 
+- [What does “resolved” / “resolving” term actually mean in PHP?](http://stackoverflow.com/a/35189219/4612064)
+
 - [Is it possible to update a already created job in kue node js](http://stackoverflow.com/questions/34919808/is-it-possible-to-update-a-already-created-job-in-kue-node-js)
   - Code [./nodejs-kue-test/](./nodejs-kue-test/)
 
