@@ -53,8 +53,8 @@ if __name__ == "__main__":
     animal3.treatments = [treat1, treat2]
     session.add(animal3)
     session.commit()
-    print Animal.treatments
-    print animal3.treatments
+    # print Animal.treatments
+    # print animal3.treatments
 
     # print get_sql_table_data(session, Animal)
     # print get_sql_table_data(session, ChronicTreatment)
@@ -67,6 +67,7 @@ if __name__ == "__main__":
            where chronic_treatments.code = :code
      """)
     ).params(code='chrFlu')
+    # print animals.all()
     for animal in animals:
         print animal.to_dict()
         print animal.treatments
