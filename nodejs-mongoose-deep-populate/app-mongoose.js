@@ -16,46 +16,30 @@ getCode = function getCode(args) {
 
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var UserSchema = new Schema({
   name:  String,
   email: String
-}, {
-  strict: 'throw'
-});
-var User = mongoose.model('User', userSchema);
+}, { strict: 'throw'} );
+var User = mongoose.model('User', UserSchema);
 
 var CommentSchema = new Schema({
   author  : {type: Schema.Types.ObjectId, ref: 'User'},
   title: String,
   body: String
-})
+}, { strict: 'throw'} )
 var Comment = mongoose.model('Comment', CommentSchema);
 
 var PostSchema = new Schema({
   title:  String,
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
-  body:   String,
-  date: { type: Date, default: Date.now },
-  hidden: Boolean,
-  meta: {
-    votes: Number,
-    favs:  Number
-  }
-}, {
-  strict: 'throw'
-});
+  body:   String
+}, { strict: 'throw'} );
 PostSchema.plugin(deepPopulate, {
   populate: {
-    'author': {
-      select: 'name'
-    },
-    'comments': {
-      select: 'title author'
-    },
-    'comments.author': {
-      select: 'name'
-    },
+    'author': { select: 'name' },
+    'comments': { select: 'title author' },
+    'comments.author': { select: 'name' }
   }
 });
 var Post = mongoose.model('Post', PostSchema);
@@ -116,12 +100,13 @@ app.get('/', function (req, res, next) {
   var blog = new Post;
   blog.title = 'test';
   blog.body = 'test';
-  blog.author = app.theUserTester._id;
+  blog.author = app.theUserTester;
   blog.save(function(err, post) {
     if (err) throw err;
     createComment(post, app.theUserPoster, 1);
     createComment(post, app.theUserTester, 2);
     Post.find(function(err, data) {
+      console.log('Post: ', data);
       var out = JSON.stringify(data, null, 4);
       res.render('data', {
         page: 'home',
@@ -129,6 +114,18 @@ app.get('/', function (req, res, next) {
         code:app.code,
         data: hljs.highlight('json', out).value});
     });
+  });
+});
+
+app.get('/posts', function (req, res, next) {
+  app.code = getCode(arguments);
+  Post.find().exec(function(err, data) {
+    var out = JSON.stringify(data, null, 4);
+    res.render('data', {
+      page: 'posts',
+      title: 'Mongoose - Posts',
+      code:app.code,
+      data: hljs.highlight('json', out).value});
   });
 });
 
@@ -149,7 +146,7 @@ app.get('/refsfull', function (req, res, next) {
   Post.find().deepPopulate('author comments.author').exec(function(err, data) {
     var out = JSON.stringify(data, null, 4);
     res.render('data', {
-      page: 'refs',
+      page: 'refsfull',
       title: 'Mongoose - Post with deep populated data, all data for post',
       code:app.code,
       data: hljs.highlight('json', out).value});
@@ -161,14 +158,10 @@ app.get('/clear', function (req, res, next) {
     if (err) throw err;
     Post.remove(function(err, data) {
       if (err) throw err;
-      User.remove(function(err, data) {
-        if (err) throw err;
-        res.redirect('/');
-      });
+      res.redirect('/');
     });
   });
 });
-
 
 var server = app.listen(3008, function () {
   var host = server.address().address
