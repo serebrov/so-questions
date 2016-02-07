@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0" />
+    <title>mongo-test</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/highlight.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css" media="all" />
+</head>
+<body>
+    <a href='/' class="<%= page=='home'?'active':''%>">home</a>&nbsp;
+    <a href='/refs' class="<%= page=='refs'?'active':''%>">references population</a>&nbsp;
+    <a href='/clear'">clear data</a>&nbsp;
+    <br/>
+    <br/>
+    <h1>
+        <%- title %>
+    </h1>
+    <div><code><pre><%- code %></pre></code></div>
+    <div><code><pre><%- data %></code></pre></div>
+</body>
+</html>
+

@@ -1,0 +1,13 @@
+{
+  "name": "generate-mongo-data-example",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "mongoose": "~3.8.19",
+    "mongoose-deep-populate": "~2.0.3",
+    "express": "~4.10.4",
+    "highlight.js": "~8.4.0",
+    "ejs": "~1.0.0"
+  }
+}
