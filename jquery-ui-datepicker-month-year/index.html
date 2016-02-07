@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-date-input-directive-production</title>
+
+  <link rel="stylesheet" href="/jquery-ui-1.11.4.custom/jquery-ui.css">
+  <script src="/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
+  <script src="/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+
+
+
+</head>
+<body>
+<div class="form-group flex">
+  <label for="search-form-depart-date" class="navbar-toggle-addon">Departing</label>
+  <div class="inputAddon flex-shrinker flex-grower">
+
+    <input id="search-form-depart-date" type="text" autocomplete="off" class="inputAddon-field datepicker" data-value="" placeholder="select date" readonly>
+
+  </div>
+</div>
+<script>
+  var dateToday = new Date();
+  var maxDate = "+365d";
+  $('.datepicker').datepicker({
+    //minDate: dateToday,
+   //maxDate: maxDate,
+    dateFormat: "dd-mm-yy",
+    //dateFormat: "MM yy",
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    onChangeMonthYear: function(year, month, instance) {
+      var thisCalendar = $(this);
+      setTimeout(function() {
+        var buttonPane = $(instance)
+          .datepicker("widget")
+          .find(".ui-datepicker-buttonpane");
+
+        $("<button>", {
+          text: "Whole month",
+          click: function() {
+            alert(thisCalendar.datepicker('getDate'));
+            //alert(thisCalendar.datepicker('getDate'));
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            thisCalendar.datepicker("option", "minDate", null);
+            thisCalendar.datepicker("option", "maxDate", null);
+            thisCalendar.datepicker("option", "dateFormat", "MM yy");
+            thisCalendar.datepicker("option", "minDate", dateToday);
+            thisCalendar.datepicker("option", "maxDate", maxDate);
+            // Workaround for `MM yy` parsing bug (or not bug?)
+            $('.datepicker').datepicker('option', 'defaultDate', new Date(year, month, 1));
+            thisCalendar.datepicker('setDate', new Date(year, month, 1));
+            alert(thisCalendar.datepicker('getDate'));
+          }
+        }).appendTo(buttonPane).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+      }, 1);
+    }
+
+  })
+</script>
+</body>
+</html>

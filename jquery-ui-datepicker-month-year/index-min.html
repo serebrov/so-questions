@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-date-input-directive-production</title>
+
+  <link rel="stylesheet" href="/jquery-ui-1.11.4.custom/jquery-ui.css">
+  <script src="/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
+  <script src="/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+
+
+
+</head>
+<body>
+<div class="form-group flex">
+  <label for="search-form-depart-date" class="navbar-toggle-addon">Departing</label>
+  <div class="inputAddon flex-shrinker flex-grower">
+
+    <input id="search-form-depart-date" type="text" autocomplete="off" class="inputAddon-field datepicker" data-value="" placeholder="select date" readonly>
+
+  </div>
+</div>
+<script>
+  // There is an issue with datepicker - it doesn't work with
+  // partial formats such as MM yy
+  // See http://stackoverflow.com/q/35240357/4612064
+  $('.datepicker').datepicker({dateFormat: "MM yy"});
+  $('.datepicker').datepicker('setDate', new Date(2014, 3, 1));
+  alert($('.datepicker').datepicker('getDate'));
+  // Workaround - set 'defaultDate' to the same date
+  //$('.datepicker').datepicker('option', 'defaultDate', new Date(2014, 3, 1));
+
+</script>
+</body>
+</html>
