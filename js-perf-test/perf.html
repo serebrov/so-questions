@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/perf.js"></script>
+  <title>Example</title>
+</head>
+<body>
+  <button onclick="run_local_obj(this)">local obj</button>
+  <button onclick="run_proto_obj(this)">proto obj</button>
+  <button onclick="run_local_fn(this)">local obj FN</button>
+  <button onclick="run_proto_fn(this)">proto obj</button>
+<script>
+var run_local_obj = function(){
+    measure(SOME);
+};
+var run_proto_obj = function(){
+    measure(SOME2);
+};
+var run_local_fn = function(){
+    measure(SOME_FN);
+};
+var run_proto_fn = function(){
+    measure(SOME_FN2);
+};
+</script>
+</body>
+</html>
