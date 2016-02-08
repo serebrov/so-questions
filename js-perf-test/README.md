@@ -8,7 +8,8 @@ From few runs it looked like the third (`run_local_fn`) is usually longer than o
 I also then tried to run them in the backward order (click buttons from 4 to 1) and got the completely different result - the `run_local_obj` was the longest.
 
 So I modified the test code a bit, to be able to get stable results.
-Full code [is here], and here is how I run each test in Chrome:
+Full code [is here](https://github.com/serebrov/so-questions/tree/master/js-perf-test), and here is how I run each test in Chrome:
+
 - Open the tab http://localhost/perf.html, open dev tools
 - Start the timeline recording
 - Click the button
@@ -17,10 +18,10 @@ Full code [is here], and here is how I run each test in Chrome:
 
 Results are stable and repeatable (both timings and timeline view), here is one of tests:
 
-- `run_local_obj' - 508.45ms, [timeline](./1_run_local_obj.png)
-- `run_proto_obj' - 433.11ms, [timeline](./1_run_proto_obj.png)
-- `run_local_fn' - 756.26ms, [timeline](./1_run_local_fn.png)
-- `run_proto_fn' - 560.62ms, [timeline](./1_run_proto_fn.png)
+- `run_local_obj' - 508.45ms, [timeline](https://raw.githubusercontent.com/serebrov/so-questions/master/js-perf-test/1_run_local_obj.png)
+- `run_proto_obj' - 433.11ms, [timeline](https://raw.githubusercontent.com/serebrov/so-questions/master/js-perf-test/2_run_proto_obj.png)
+- `run_local_fn' - 756.26ms, [timeline](https://raw.githubusercontent.com/serebrov/so-questions/master/js-perf-test/3_run_local_fn.png)
+- `run_proto_fn' - 560.62ms, [timeline](https://raw.githubusercontent.com/serebrov/so-questions/master/js-perf-test/4_run_proto_fn.png)
 
 So what do we see here is:
 
