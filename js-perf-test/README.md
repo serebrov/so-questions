@@ -46,3 +46,10 @@ So back to your question:
 
 It looks for me like you just didn't setup the experiment properly.
 According to the results above, `run_proto_obj` is actually the fastest.
+
+Same test in Firefox:
+
+- `run_local_obj' - 344.85
+- `run_proto_obj' - 151.47
+- `run_local_fn' - 788.08
+- `run_proto_fn' - 265.21
