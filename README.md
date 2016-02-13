@@ -1,5 +1,12 @@
 Various tests and stackoverflow questions
 
+- [http://stackoverflow.com/questions/35319739/node-js-how-to-inherit-from-abstract-class](http://stackoverflow.com/q/35319739/4612064)
+  - Code [./js-inheritance](./js-inheritance)
+
+- [Odoo setup on the Mac OS X El Capitan](http://stackoverflow.com/questions/35122765/unable-to-run-odoo-properly-in-mac-os-x/35303294#35303294)
+
+- [How to pass data to controller and back to the view in Angular? (directive)](http://stackoverflow.com/questions/35325456/how-to-pass-data-to-controller-and-back-to-the-view-in-angular/35326035#35326035)
+
 - [Mongoose deep populate limiting the intermediate model](http://stackoverflow.com/questions/34786589/mongoose-deep-populate-limiting-intermediate-model/35241056)
   - Code [./nodejs-mongoose-deep-populate/](./nodejs-mongoose-deep-populate/)
 

@@ -1,7 +1,7 @@
 var providerPrototype = {
   name: 'Prototype',
   alertName: function() {  // this is common function, all objects
-    alert(this.name);      // will have it
+    console.log(this.name);      // will have it
   }
 };
 
@@ -10,6 +10,11 @@ appleProvider.name = 'Apple';
 // this is a specific function for 'Apple'
 appleProvider.getCatalog = function(callback) {
   return callback(null, ['iPhone', 'Mac Mini']);
+}
+appleProvider.alertName = function() {
+   // call 'base' method
+   providerPrototype.alertName.call(this);
+   console.log('All rights reserved.');
 }
 
 var samsungProvider = Object.create(providerPrototype);
@@ -32,7 +37,7 @@ var syncCatalogues = function(search, callback) {
         return callback(err);
       }
       aProvider.alertName(); // call the base method
-      alert(catalog);
+      console.log(catalog);
     });
   }
 };
