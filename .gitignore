@@ -4,6 +4,8 @@ session.vim
 node_modules/
 git-local-clone/
 
+quick-test/chromedriver*
+
 #ignore temp files
 error.tmp
 *.bak
