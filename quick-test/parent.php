@@ -1,4 +1,7 @@
 <?php
+
+// See http://stackoverflow.com/questions/35385426/understand-why-parent-properties-can-be-accessed-from-child-class-but-parent-obj
+//
 class Application
 {
     //Class Objects
