@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-date-input-directive-production</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <!-- sha1 -->
+  <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
+  <!-- sha256 -->
+  <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
+  <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+  <script src="public/oauth-1.0a.js"></script>
+
+</head>
+<body>
+    <h1>Use the js console for this test</h1>
+<script>
+var consumer = {
+    public: 'd143646921cb9e460f93abd971113c4a',
+    secret: '0cc3cd641cc79b68'
+};
+var oauth = OAuth({
+    consumer: consumer,
+    signature_method: 'HMAC-SHA1'
+});
+
+function step1_tempToken() {
+    var request_data = {
+        url: 'https://www.upwork.com/api/auth/v1/oauth/token/request',
+        method: 'POST',
+        data: {}
+    };
+    // Without JSONP - No 'Access-Control-Allow-Origin' header is present
+    // Witth JSONP - not found (because it should be POST)
+    // so this endpoint doesn't support JSONP
+    $.ajax({
+        url: request_data.url,
+        dataType: 'JSONP',
+        type: request_data.method,
+        data: oauth.authorize(request_data)
+    }).done(function(data) {
+        //process your data here
+        console.log(data);
+    }).fail(function(error) {
+        console.log(error);
+    });
+};
+
+function getOauthData(data) {
+    var url = ''
+    url += "oauth_consumer_key="+data.oauth_consumer_key;
+    url += "&oauth_signature="+data.oauth_signature;
+    url += "&oauth_nonce="+data.oauth_nonce;
+    url += "&oauth_signature_method="+data.oauth_signature_method;
+    url += "&oauth_timestamp="+data.oauth_timestamp;
+    url += "&oauth_token="+data.oauth_token;
+    url += "&oauth_version="+data.oauth_version;
+    return url;
+}
+
+function step2_askUser(tempTokenPublic) {
+   window.open('https://www.upwork.com/services/api/auth?oauth_token='+tempTokenPublic, '_blank');
+};
+
+function queryAPI(public, secret) {
+    var accessToken = {
+        public: public,
+        secret: secret
+    }
+    var request_data = {
+        url: 'https://www.upwork.com/api/profiles/v2/search/jobs.json',
+        method: 'GET',
+        data: {
+          'q': 'java'
+        }
+    };
+
+    //manually construct the url
+    //var data = oauth.authorize(request_data, accessToken) // use the access token
+    //var url = request_data.url + '?q=java&callback=?&' + getOauthData(data);
+    //console.log(url);
+
+    // Ajax request
+    // https://developers.upwork.com/?lang=node#getting-started_cross-domain-requests
+    $.ajax({
+      // url: url,
+      url: request_data.url,
+      dataType: 'JSONP',
+      data: oauth.authorize(request_data, accessToken),
+      cache: true, // this removes the '_' parameter
+      success:function(json){
+        console.log(json);
+      },
+      error: function(error){
+        console.log(error);
+      },
+    });
+};
+</script>
+</body>
+</html>

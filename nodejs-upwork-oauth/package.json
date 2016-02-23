@@ -1,0 +1,12 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "^4.13.4",
+    "oauth-1.0a": "^1.0.1",
+    "request": "^2.69.0",
+    "request-debug": "^0.2.0"
+  },
+  "devDependencies": {}
+}
