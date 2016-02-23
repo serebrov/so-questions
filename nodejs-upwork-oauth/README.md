@@ -187,6 +187,8 @@ But it returns the 'Verification of signature failed' error. The very similar re
 
 Also the example in the Upwork docs is incorrect, it says to add `callback=?` to the request, but jQuery adds this parameter automatically when you set `JSONP` data type. So probably some essential detail is missing from the docs or there is a problem on the Upwork side.
 
+Note: after I revoked the authorization in the Upwork UI, the error changed to 'The consumer_key and token combination does not exist or is not enabled'.
+
 Anyway, since you need the server side for Oauth, you also can use it to make the API requests to API and return to the client side.
 
 ### How to use the code example
