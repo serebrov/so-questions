@@ -76,6 +76,11 @@ function queryAPI(public, secret) {
     };
 
     //manually construct the url
+    // the difference is that jQuery will URL-encode all the parameters
+    // and with manual construction we keep parameters as is
+    // but it still doesn't work the same way in both cases
+    // (and it does work in node.js code also in both cases - when parameters are
+    //  encoded and when they are not encoded)
     //var data = oauth.authorize(request_data, accessToken) // use the access token
     //var url = request_data.url + '?q=java&callback=?&' + getOauthData(data);
     //console.log(url);
@@ -86,6 +91,10 @@ function queryAPI(public, secret) {
       // url: url,
       url: request_data.url,
       dataType: 'JSONP',
+      // here the data will contain 'q=java' as well as all the oauth parameters
+      // the request type will be GET (since this is JSONP), so all parameters will
+      // be converted to the query string
+      // you can check the URL in the developer console, in the list of network requests
       data: oauth.authorize(request_data, accessToken),
       cache: true, // this removes the '_' parameter
       success:function(json){

@@ -1,6 +1,9 @@
 See: http://stackoverflow.com/questions/35408176/how-to-request-a-jsonp-file-via-jquery-ajax-from-the-upwork-api-that-uses-oauth
 
-First, you need to understand the OAuth 1.0 process.
+**TLDR** I am starting with the OAuth 1.0 process description to be sure that the code examples below and my conclusions will be clear.
+Skip to the `The code` part if OAuth process is clear.
+
+## The OAuth 1.0 process
 
 I use the following terms below (they differ from the official terminology, but hopefully will make things clearer):
 
@@ -27,7 +30,7 @@ In the case of Upwork you send this request to the https://www.upwork.com/api/au
 
 ### Step 2. Ask the user to grant you an access.
 
-Your application just re-directs the user to the special URL provided by Service.
+Your application just redirects the user to the special URL provided by Service.
 
 The service shows a dialog where the user can provide access for your application.
 This special URL includes the `temporary token` from the step 1, so the Service knows which application asks for the access.
@@ -42,7 +45,7 @@ It may be not supported at all or supported in some other way.
 
 In the case of Upwork you send the user to the URL https://www.upwork.com/services/api/auth?oauth_token={temporary token}
 
-### Step 3. Get the access token.
+### Step 3. Get the real oauth access token.
 
 Your app sends the temporary token from the step 1 and oauth verifier from the step 2 to the Service.
 The request is again signed, but this time using the `client secret` and `temporary token secret`.
@@ -70,14 +73,16 @@ The most complex part of the process is requests signing, it is covered in detai
 The [oauth-1.0a](https://github.com/ddo/oauth-1.0a) allows you to sign your requests in node.js and in client-side javascript.
 You still need to perform the oauth steps from your application, the library will only help you with signing.
 
-### The code
+## The code
 
-I tested the "Step 1" from the browser code and Upwork doesn't support it.
-If I send the regular POST request with ajax, it returns the 'Access-Control-Allow-Origin` error. And if I try this request using JSONP, Upwork responds with the 404 error.
+I tested the `Step 1` from the browser javascript and Upwork doesn't support this scenario.
+If I send the regular POST request with ajax, it returns the 'Access-Control-Allow-Origin` error. And if I try this request using `JSONP`, Upwork responds with the 404 error.
 
-So there is no JSONP support for the `api/auth/v1/oauth/token/request` endpoint. And the Steps 1-3 should be done using the server-side (anyway client side authentication would be non-secure).
+So there is no `JSONP` support for the `api/auth/v1/oauth/token/request` endpoint.
 
-Here is how the token request looks:
+The Steps 1-3 should be done using the server-side (anyway client side authentication would be non-secure).
+
+Here is how the token request looks (`Step 1`):
 
     oauthTest.step1_tempToken = function() {
         var request_data = {
@@ -95,14 +100,16 @@ Here is how the token request looks:
         });
     };
 
-The full code is [here]().
+The full code is [here](https://github.com/serebrov/so-questions/tree/master/nodejs-upwork-oauth).
 
 Note that Upwork has the [nodejs library](https://github.com/upwork/node-upwork), but I didn't use it just to do all things manually.
 Requests are signed using [oauth-1.0a](https://github.com/ddo/oauth-1.0a).
 
-The step 2 is performed in the browser, here you just open the url like 'https://www.upwork.com/services/api/auth?oauth_token=xxx' and get the oauth verifier.
+The `Step 2` is performed in the browser, here you just open the url like 'https://www.upwork.com/services/api/auth?oauth_token=xxx' and get the oauth verifier.
+In the real-life scenario, your application will specify the `oauth_callback` parameter and Upwork will send the oauth verifier to your application.
+In this example I just manually copy it from the browser and pass to the next step.
 
-Now you can get the permanent access token:
+Having the oauth verifier, you can get the permanent access token (`Step 3`):
 
     oauthTest.step3_accessToken = function(oauth_verifier) {
         var request_data = {
@@ -122,7 +129,7 @@ Now you can get the permanent access token:
         });
     };
 
-Finally, you can use the API (again, this is server-side code):
+Finally, you can use the API, `Step 4` (again, this is server-side code):
 
     oauthTest.queryAPI = function() {
         var request_data = {
@@ -143,7 +150,7 @@ Finally, you can use the API (again, this is server-side code):
 
 It should be possible to do the same request from the browser this way:
 
-    function queryAPI() {
+    function queryAPI(public, secret) {
         var accessToken = {
             public: public,
             secret: secret
@@ -159,6 +166,10 @@ It should be possible to do the same request from the browser this way:
         $.ajax({
           url: request_data.url,
           dataType: 'JSONP',
+          // here the data will contain 'q=java' as well as all the oauth parameters
+          // the request type will be GET (since this is JSONP), so all parameters will
+          // be converted to the query string
+          // you can check the URL in the developer console, in the list of network requests
           data: oauth.authorize(request_data, accessToken),
           cache: true, // this removes the '_' parameter
           success:function(json){
@@ -170,11 +181,11 @@ It should be possible to do the same request from the browser this way:
         });
     };
 
-According to the Upwork [docs](https://developers.upwork.com/?lang=node#getting-started_cross-domain-requests) it should be possible to use the access token to perform jsonp requests.
+According to the Upwork [docs](https://developers.upwork.com/?lang=node#getting-started_cross-domain-requests) it should work with `JSONP`.
 
-But I tried to do exactly the same request from the client side which works from the node.js. It returns 'Verification of signature failed.'.
+But it returns the 'Verification of signature failed' error. The very similar request works from node.js code.
 
-Also the example in the Upwork docs is incorrect, it says to add 'callback=?' to the request, but jQuery adds this parameter automatically when you set 'JSONP' data type. So probably some essential detail is missing from the docs or there is a problem on the Upwork side.
+Also the example in the Upwork docs is incorrect, it says to add `callback=?` to the request, but jQuery adds this parameter automatically when you set `JSONP` data type. So probably some essential detail is missing from the docs or there is a problem on the Upwork side.
 
 Anyway, since you need the server side for Oauth, you also can use it to make the API requests to API and return to the client side.
 
@@ -182,39 +193,33 @@ Anyway, since you need the server side for Oauth, you also can use it to make th
 
 Get the copy of the [nodejs-upwork-oauth]() folder, do `npm install` and start the node.js console:
 
-```
-$ node
-> oauthTest = require('./server')
-> oauthTest.step1_tempToken()
-> // wait for the result
-{ public: 'xxxx',
-  secret: 'yyyy' }
-> // copy the public temp access token
-> // don't exit it yet
->
-```
+    $ node
+    > oauthTest = require('./server')
+    > oauthTest.step1_tempToken()
+    > // wait for the result
+    { public: 'xxxx',
+      secret: 'yyyy' }
+    > // copy the public temp access token
+    > // don't exit it yet
+    >
 
 Now open the `test.html` in the browser and open the JS console, run:
 
-```
-> step2_askUser('temp_access_token_here')
-> // it will open the upwork auth page in new tab
-Application authorized
+    > step2_askUser('temp_access_token_here')
+    > // it will open the upwork auth page in new tab
+    Application authorized
 
-jobs-alert has been authorized.
-Your oauth_verifier=zzzz
+    jobs-alert has been authorized.
+    Your oauth_verifier=zzzz
 
-You can close this window and return to your application.
-> // authorize there and copy the oauth_verifier
-```
+    You can close this window and return to your application.
+    > // authorize there and copy the oauth_verifier
 
 Go back to the nodejs console:
 
-```
-> oauthTest.step3_accessToken('oauth verifier here')
-> // wait for the result
-{ public: 'nnnnn',
-  secret: 'kkkkk' }
-> oauthTest.queryAPI()
-> // see the query result
-```
+    > oauthTest.step3_accessToken('oauth verifier here')
+    > // wait for the result
+    { public: 'nnnnn',
+      secret: 'kkkkk' }
+    > oauthTest.queryAPI()
+    > // see the query result

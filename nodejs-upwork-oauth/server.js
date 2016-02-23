@@ -93,6 +93,11 @@ oauthTest.queryAPI = function() {
     };
 
     //manually construct the url
+    // this was used to compare requests between browser and node.js
+    // for node.js it works both for manually constructed url (no URL encode for params)
+    // and with URL constucted by request module (params are encoded)
+    // but in the browser it doesn't work in both cases
+    //
     // var data = oauthTest.oauth.authorize(request_data, oauthTest.accessToken) // use the access token
     // var url = request_data.url + '?q=java&' + getOauthData(data);
     // console.log(url);
