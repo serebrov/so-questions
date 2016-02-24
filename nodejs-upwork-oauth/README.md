@@ -148,7 +148,11 @@ Finally, you can use the API, `Step 4` (again, this is server-side code):
         });
     };
 
-It should be possible to do the same request from the browser this way:
+It is possible to do use the API from the client side (although it is not good, because you need to put your access token and secret into the code).
+
+The solution is tricky, because the documentation(https://developers.upwork.com/?lang=node#getting-started_cross-domain-requests) is not complete and not exactly correct.
+
+It says to add `callback=?` to the request, but jQuery adds this parameter automatically when you set `JSONP` data type. Also the parameter value is set to some random string, so I thought that this parameter should not be signed, but it appears that it should:
 
     function queryAPI(public, secret) {
         var accessToken = {
@@ -159,18 +163,32 @@ It should be possible to do the same request from the browser this way:
             url: 'https://www.upwork.com/api/profiles/v2/search/jobs.json',
             method: 'GET',
             data: {
-              'q': 'java'
+              'q': 'java',
+              'callback': 'jsoncallback'
             }
         };
+
+        // It looks like a bug on the Upwork side, the `callback` parameter is usually
+        // selected randomly by jQuery, so server side should skip it from the signature
+        // validation, but it doesn't, so we sign the request with `callback` parameter
+        // and then remove it from data, because it this parameter is automatically added
+        // by jQuery, we also set the static value for callback - 'jsoncallback`
+        var data = oauth.authorize(request_data, accessToken);
+        delete data.callback;
+
+        // Ajax request
         // https://developers.upwork.com/?lang=node#getting-started_cross-domain-requests
         $.ajax({
+          // url: url,
           url: request_data.url,
           dataType: 'JSONP',
+          jsonpCallback: 'jsoncallback',
           // here the data will contain 'q=java' as well as all the oauth parameters
           // the request type will be GET (since this is JSONP), so all parameters will
           // be converted to the query string
           // you can check the URL in the developer console, in the list of network requests
-          data: oauth.authorize(request_data, accessToken),
+          //data: oauth.authorize(request_data, accessToken),
+          data: data,
           cache: true, // this removes the '_' parameter
           success:function(json){
             console.log(json);
@@ -181,15 +199,7 @@ It should be possible to do the same request from the browser this way:
         });
     };
 
-According to the Upwork [docs](https://developers.upwork.com/?lang=node#getting-started_cross-domain-requests) it should work with `JSONP`.
-
-But it returns the 'Verification of signature failed' error. The very similar request works from node.js code.
-
-Also the example in the Upwork docs is incorrect, it says to add `callback=?` to the request, but jQuery adds this parameter automatically when you set `JSONP` data type. So probably some essential detail is missing from the docs or there is a problem on the Upwork side.
-
-Note: after I revoked the authorization in the Upwork UI, the error changed to 'The consumer_key and token combination does not exist or is not enabled'.
-
-Anyway, since you need the server side for Oauth, you also can use it to make the API requests to API and return to the client side.
+Anyway this is insecure, and since you need the server side for Oauth, you also can use it to make the API requests to API and return results to the client side.
 
 ### How to use the code example
 
@@ -225,3 +235,8 @@ Go back to the nodejs console:
       secret: 'kkkkk' }
     > oauthTest.queryAPI()
     > // see the query result
+
+And go back to the browser:
+
+    > queryAPI('access token public', 'access token secret')
+    < Object {server_time: 1456301893, auth_user: Object, profile_access: "public,odesk", jobs: Array[10], paging: Object}
