@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>jQuery templates</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+    <form>
+        <table id='mytable'>
+            <tr>
+                <td>Project</td>
+                <td>Workstage</td>
+                <td>Hours</td>
+                <td>Description</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input size=3 id='total' disabled='disabled'/></td>
+                <td></td>
+            </tr>
+            <tr id='myrow'>
+                <td>
+                    <select id="project" name="">
+                        <option value="">Select One</option>
+                    </select>
+                </td><td>
+                    <select id="task" name="" onchange="updateText('task')">>
+                        <option value="">Select One</option>
+                    </select>
+                </td>
+                <td>
+                    <select name = 'hours' onmouseup="sumInputs()">
+                        <option>1.0</option>
+                        <option>1.5</option>
+                        <option>2.0</option>
+                    </select>
+                    <td><input type="text" value="" id="taskText" /></td>
+            </tr>
+        </table>
+        <input type="button" onclick="cloneRow()" value="Add Row" />
+    </form>
+<script>
+function cloneRow() {
+  var row = document.getElementById("myrow"); // find row to copy
+  var table = document.getElementById("mytable"); // find table to append to
+  var clone = row.cloneNode(true); // copy children too
+  clone.id = "newID"; // change id or other attributes/contents
+  table.appendChild(clone); // add new row to end of table
+}
+
+function createRow() {
+  var row = document.createElement('tr'); // create row node
+  var col = document.createElement('td'); // create column node
+  var col2 = document.createElement('td'); // create second column node
+  row.appendChild(col); // append first column to row
+  row.appendChild(col2); // append second column to row
+  col.innerHTML = "qwe"; // put data in first column
+  col2.innerHTML = "rty"; // put data in second column
+  var table = document.getElementById("tableToModify"); // find table to append to
+  table.appendChild(row); // append row to table
+}
+
+window.sumInputs = function() {
+    var inputs = document.getElementsByName('hours'),
+        result = document.getElementById('total'),
+        sum = 0;
+
+    for(var i=0; i<inputs.length; i++) {
+        var ip = inputs[i];
+
+        if (ip.name && ip.name.indexOf("total") < 0) {
+            sum += parseFloat(ip.value) || 0;
+        }
+
+    }
+
+    result.value = sum;
+}
+
+var myJson =
+{
+   "listItems":[
+      {
+         "id":"1",
+         "project_no":"1001",
+         "task":[
+            {
+               "task_description":"Folding stuff",
+               "id":"111",
+               "task_summary":"Folding",
+            },
+            {
+               "task_description":"Drawing stuff",
+               "id":"222",
+               "task_summary":"Drawing"
+            }
+         ]
+      },
+      {
+         "id":"2",
+         "project_no":"1002",
+         "task":[
+            {
+               "task_description":"Meeting description",
+               "id":"333",
+               "task_summary":"Meeting"
+            },
+            {
+               "task_description":"Administration",
+               "id":"444",
+               "task_summary":"Admin"
+            }
+         ]
+      }
+   ]
+}
+
+$(function(){
+  $.each(myJson.listItems, function (index, value) {
+    $("#project").append('<option value="'+value.id+'">'+value.project_no+'</option>');
+  });
+  $('#project').on('change', function(){
+    $('#task').html('<option value="000">-Select Task-</option>');
+    for(var i = 0; i < myJson.listItems.length; i++)
+    {
+      if(myJson.listItems[i].id == $(this).val())
+      {
+         $.each(myJson.listItems[i].task, function (index, value) {
+            $("#task").append('<option value="'+value.id+'" data-description="'+value.task_description+'">'+value.task_summary+'</option>');
+        });
+      }
+    }
+  });
+});
+
+$('#task').change(function() {
+  $('#taskText').val( $(this).find('option:selected').data('description') )
+})
+</script>
+</body>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>jQuery templates</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+    <form>
+        <table id='mytable'>
+            <tr>
+                <td>Project</td>
+                <td>Workstage</td>
+                <td>Hours</td>
+                <td>Description</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input size=3 id='total' disabled='disabled'/></td>
+                <td></td>
+            </tr>
+            <tr class='myrow-template' style='display:none'>
+                <td>
+                    <select class="project" name="">
+                        <option value="">Select One</option>
+                        <option class='project-option-tpl' value="{id}" style='display:none'>{project_no}</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="task" name="">
+                        <option value="000">-Select Task-</option>
+                        <option class='task-option-tpl' value="{id}" data-description="{task_description}" style='display:none'>{task_summary}</option>
+                    </select>
+                </td>
+                <td>
+                    <select class='hours'>
+                        <option>1.0</option>
+                        <option>1.5</option>
+                        <option>2.0</option>
+                    </select>
+                </td>
+                <td><input type="text" value="" class="task-text" /></td>
+            </tr>
+        </table>
+        <input type="button" class="add-row" value="Add Row" />
+    </form>
+<script>
+var myJson =
+{
+   "listItems":[
+      {
+         "id":"1",
+         "project_no":"1001",
+         "task":[
+            {
+               "task_description":"Folding stuff",
+               "id":"111",
+               "task_summary":"Folding",
+            },
+            {
+               "task_description":"Drawing stuff",
+               "id":"222",
+               "task_summary":"Drawing"
+            }
+         ]
+      },
+      {
+         "id":"2",
+         "project_no":"1002",
+         "task":[
+            {
+               "task_description":"Meeting description",
+               "id":"333",
+               "task_summary":"Meeting"
+            },
+            {
+               "task_description":"Administration",
+               "id":"444",
+               "task_summary":"Admin"
+            }
+         ]
+      }
+   ]
+}
+
+var template = function($target) {
+  $target = $($target.get(0));
+  return {
+    populate: function(data) {
+      var self = this;
+      this.clear();
+      $.each(data, function (index, value) {
+        self.clone(value);
+      });
+    },
+    clone: function(value) {
+      var $clone = $target.clone();
+      $clone.addClass('clone').appendTo($target.parent()).fadeIn('slow');
+      if (value) {
+        var html = $clone.get(0).outerHTML;
+        for (var key in value) {
+          html = html.replace('{'+key+'}', value[key]);
+        }
+        $clone.get(0).outerHTML = html;
+        $clone = $target.parent().find(':last')
+        $clone.data('template-data', value);
+      }
+      return $clone;
+    },
+    clear: function() {
+      $target.parent().find('.clone').remove();
+    }
+  };
+};
+
+function createRow() {
+  var $clone = template($('.myrow-template')).clone();
+  template($clone.find('.project-option-tpl')).populate(myJson.listItems);
+  updateHours();
+}
+
+function updateHours() {
+  var total = 0;
+  $('.hours:visible').each(function (index, item) {
+    total += parseFloat($(item).val()) || 0;
+  });
+  $('#total').val(total);
+}
+
+$(function(){
+  createRow();
+  $('#mytable').on('change', '.project', function() {
+    var data = $(this).find(':selected').data('template-data');
+    template($(this).parent().parent().find('.task-option-tpl')).populate(data.task);
+  });
+  $('#mytable').on('change', '.task', function() {
+    var data = $(this).find(':selected').data('template-data');
+    $(this).parent().parent().find('.task-text').val(data.task_description);
+  });
+  $('#mytable').on('mouseup', '.hours',function() {
+    updateHours();
+  });
+  $('.add-row').on('click', function() {
+    createRow();
+  });
+});
+
+</script>
+</body>

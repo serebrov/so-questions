@@ -1,5 +1,12 @@
 Various tests and stackoverflow questions
 
+- [About simple jQuery-based templating system](http://stackoverflow.com/questions/35536144/persuading-scripts-to-play-nicely-together/35656555)
+  - Code [./jquery-templates](./jquery-templates)
+  - Related question and answer - [Remove cloned elements and add new ones](http://stackoverflow.com/questions/35023369/remove-cloned-elements-and-add-new-ones/35025496)
+
+- [Python multiple inheritance question](see http://stackoverflow.com/q/35626923/4612064)
+  - Code [./quick-test/test_multiple_inheritance.py](./quick-test/test_multiple_inheritance.py)
+
 - [How to request a JSONP file via jQuery AJAX from the Upwork API that uses OAuth 1.0 authentication?](http://stackoverflow.com/questions/35408176/how-to-request-a-jsonp-file-via-jquery-ajax-from-the-upwork-api-that-uses-oauth)
   - Code [./nodejs-upwork-oauth/](./nodejs-upwork-oauth/)
 
