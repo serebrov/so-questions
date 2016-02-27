@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>jQuery templates</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+</head>
+<body ng-app="MyApp">
+    <form ng-controller="TasksController as ctrl">
+        <table id='mytable'>
+            <tr>
+                <td>Project</td>
+                <td>Workstage</td>
+                <td>Hours</td>
+                <td>Description</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input size=3 id='total' value="{{ctrl.total()}}" disabled='disabled'/></td>
+                <td></td>
+            </tr>
+            <tr ng-repeat="row in ctrl.rows">
+                <td>
+                    <select ng-model="row.project" ng-options="project as project.project_no for project in ctrl.projects">
+                        <option value="">Select One</option>
+                    </select>
+                </td>
+                <td>
+                    <select ng-model="row.task" ng-options="task as task.task_summary for task in row.project.task">
+                        <option value="">Select Task</option>
+                    </select>
+                </td>
+                <td>
+                  <select ng-model='row.hours' ng-options="hour as (hour | number : 1) for hour in ctrl.hours">
+                    </select>
+                </td>
+                <td><input type="text" value="{{row.task.task_description}}" class="task-text" /></td>
+            </tr>
+        </table>
+        <input type="button" ng-click="ctrl.addRow()" value="Add Row" />
+    </form>
+<script>
+var projects = [{
+   "id":"1",
+   "project_no":"1001",
+   "task":[ {
+         "task_description":"Folding stuff",
+         "id":"111",
+         "task_summary":"Folding",
+      }, {
+         "task_description":"Drawing stuff",
+         "id":"222",
+         "task_summary":"Drawing"
+      } ]
+}, {
+   "id":"2",
+   "project_no":"1002",
+   "task":[ {
+         "task_description":"Meeting description",
+         "id":"333",
+         "task_summary":"Meeting"
+      }, {
+         "task_description":"Administration",
+         "id":"444",
+         "task_summary":"Admin"
+      } ]
+}];
+
+ angular.module('MyApp', [])
+   .controller('TasksController', ['$scope', function($scope) {
+     var self = this;
+     this.newRow = function() {
+       return {
+         project: null,
+         task: null,
+         hours: 1.0
+       };
+     };
+     this.total = 0;
+     this.hours = [1.0, 1.5, 2.0];
+     this.projects = projects;
+     this.rows = [ this.newRow() ];
+     this.total = function() {
+       return this.rows.reduce(function(prev, curr) {
+         return prev + parseFloat(curr.hours);
+       }, 0);
+     };
+     this.addRow = function() {
+       this.rows.push(this.newRow());
+     };
+   }]);
+
+</script>
+</body>

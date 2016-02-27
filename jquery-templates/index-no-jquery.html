@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>jQuery templates</title>
+</head>
+<body>
+    <form>
+        <table id='mytable'>
+            <tr>
+                <td>Project</td>
+                <td>Workstage</td>
+                <td>Hours</td>
+                <td>Description</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input size=3 id='total' disabled='disabled'/></td>
+                <td></td>
+            </tr>
+            <tr class='myrow-template' style='display:none'>
+                <td>
+                    <select class="project" name="">
+                        <option value="">Select One</option>
+                        <option class='project-option-tpl' value="{id}" style='display:none'>{project_no}</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="task" name="">
+                        <option value="000">-Select Task-</option>
+                        <option class='task-option-tpl' value="{id}" data-description="{task_description}" style='display:none'>{task_summary}</option>
+                    </select>
+                </td>
+                <td>
+                    <select class='hours'>
+                        <option>1.0</option>
+                        <option>1.5</option>
+                        <option>2.0</option>
+                    </select>
+                </td>
+                <td><input type="text" value="" class="task-text" /></td>
+            </tr>
+        </table>
+        <input type="button" class="add-row" value="Add Row" />
+    </form>
+<script>
+var myJson =
+{
+   "listItems":[
+      {
+         "id":"1",
+         "project_no":"1001",
+         "task":[
+            {
+               "task_description":"Folding stuff",
+               "id":"111",
+               "task_summary":"Folding",
+            },
+            {
+               "task_description":"Drawing stuff",
+               "id":"222",
+               "task_summary":"Drawing"
+            }
+         ]
+      },
+      {
+         "id":"2",
+         "project_no":"1002",
+         "task":[
+            {
+               "task_description":"Meeting description",
+               "id":"333",
+               "task_summary":"Meeting"
+            },
+            {
+               "task_description":"Administration",
+               "id":"444",
+               "task_summary":"Admin"
+            }
+         ]
+      }
+   ]
+}
+
+var template = function(target) {
+  return {
+    populate: function(data) {
+      var self = this;
+      this.clear();
+      data.forEach(function(value) {
+        self.clone(value);
+      });
+    },
+    clone: function(value) {
+      var clone = target.cloneNode(true);
+      clone.classList.add('clone');
+      clone.style.display = '';
+      target.parentNode.appendChild(clone);
+      if (value) {
+        var html = clone.outerHTML;
+        for (var key in value) {
+          html = html.replace('{'+key+'}', value[key]);
+        }
+        clone.outerHTML = html;
+        clone = target.parentNode.lastChild;
+        clone.setAttribute('dataTemplateData', JSON.stringify(value));
+      }
+      return clone;
+    },
+    clear: function() {
+      var clones = target.parentNode.querySelectorAll('.clone')
+      Array.prototype.forEach.call(clones, function(el) {
+        target.parentNode.removeChild(el);
+      });
+    }
+  };
+};
+
+function createRow() {
+  var clone = template(document.querySelector('.myrow-template')).clone();
+  template(clone.querySelector('.project-option-tpl')).populate(myJson.listItems);
+  updateHours();
+  bindEvents();
+}
+
+function bindEvents() {
+  var elements = document.querySelectorAll('#mytable .project');
+  Array.prototype.forEach.call(elements, function(elem) {
+    elem.addEventListener('change', function() {
+      var data = JSON.parse(this.options[this.selectedIndex].getAttribute('dataTemplateData'));
+      template(this.parentNode.parentNode.querySelector('.task-option-tpl')).populate(data.task);
+    });
+  });
+  elements = document.querySelectorAll('#mytable .task');
+  Array.prototype.forEach.call(elements, function(elem) {
+    elem.addEventListener('change', function() {
+      var data = JSON.parse(this.options[this.selectedIndex].getAttribute('dataTemplateData'));
+      this.parentNode.parentNode.querySelector('.task-text').value = data.task_description;
+    });
+  });
+  elements = document.querySelectorAll('#mytable .hours');
+  Array.prototype.forEach.call(elements, function(elem) {
+    elem.addEventListener('mouseup', function() {
+      updateHours();
+    });
+  });
+}
+
+function updateHours() {
+  var total = 0;
+  var hours = document.querySelectorAll('.hours');
+  Array.prototype.forEach.call(hours, function(item) {
+    if (item.parentNode.parentNode.style.display.length == 0) {
+      total += parseFloat(item.value) || 0;
+    }
+  });
+  document.getElementById('total').value = total;
+}
+function ready(fn) {
+  if (document.readyState != 'loading'){
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}
+
+ready(function(){
+  createRow();
+  document.querySelector('.add-row').addEventListener('click', function() {
+    createRow();
+  });
+});
+
+</script>
+</body>
