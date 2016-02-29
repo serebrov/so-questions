@@ -84,6 +84,17 @@ var myJson =
 }
 
 var template = function(target) {
+  var _parent = target.parentNode;
+  var _template = _parent.getAttribute('dataTemplate');
+  if (!_template) {
+    target.style.display = '';
+    target.classList.add('clone');
+    _template = target.outerHTML;
+    _parent.setAttribute('dataTemplate', JSON.stringify(_template));
+    _parent.removeChild(target);
+  } else {
+    _template = JSON.parse(_template);
+  }
   return {
     populate: function(data) {
       var self = this;
@@ -94,24 +105,24 @@ var template = function(target) {
     },
     clone: function(value) {
       var clone = target.cloneNode(true);
-      clone.classList.add('clone');
-      clone.style.display = '';
-      target.parentNode.appendChild(clone);
+      _parent.appendChild(clone);
+      var html = _template;
       if (value) {
-        var html = clone.outerHTML;
         for (var key in value) {
           html = html.replace('{'+key+'}', value[key]);
         }
-        clone.outerHTML = html;
-        clone = target.parentNode.lastChild;
+      }
+      clone.outerHTML = html;
+      clone = _parent.lastChild;
+      if (value) {
         clone.setAttribute('dataTemplateData', JSON.stringify(value));
       }
       return clone;
     },
     clear: function() {
-      var clones = target.parentNode.querySelectorAll('.clone')
+      var clones = _parent.querySelectorAll('.clone')
       Array.prototype.forEach.call(clones, function(el) {
-        target.parentNode.removeChild(el);
+        _parent.removeChild(el);
       });
     }
   };
