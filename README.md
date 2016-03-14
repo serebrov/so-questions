@@ -1,5 +1,7 @@
 Various tests and stackoverflow questions
 
+- [Creating a prototype for a function in JavaScript?](http://stackoverflow.com/questions/35911888/creating-a-prototype-for-a-function-in-javascript/35926412#35926412)
+
 - [About simple jQuery-based templating system](http://stackoverflow.com/questions/35536144/persuading-scripts-to-play-nicely-together/35656555)
   - Code [./jquery-templates](./jquery-templates) - jQuery version, pure javascript version and angular.js version
   - Related question and answer - [Remove cloned elements and add new ones](http://stackoverflow.com/questions/35023369/remove-cloned-elements-and-add-new-ones/35025496)
