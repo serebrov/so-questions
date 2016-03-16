@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="angular.min.js"></script>
+  <script src="dragtable.js"></script>
+</head>
+<body ng-app="myApp">
+    <script type="text/ng-template" id="templates/column.html">
+      <div> Column </div>
+    </script>
+    <script>
+     angular.module('myApp', ['dragtable'])
+        .directive('myColumn', ['$timeout', '$rootScope', function($timeout, $rootScope) {
+          return {
+            restrict: 'A',
+            templateUrl: 'templates/column.html',
+            link: function(scope, element, attrs) {
+              if (scope.$last)
+                $rootScope.$broadcast('dragtable.reinit');
+            }
+          }
+        }])
+       .controller('MyController', ['$filter', function($filter) {
+         this.columns = ['col1', 'col2', 'col3'];
+       }]);
+  </script>
+  <div ng-controller="MyController as table">
+    <h2>Dynamic table</h2>
+    <table draggable>
+       <thead>
+         <tr>
+           <th ng-repeat="col in table.columns" my-column></th>
+         </tr>
+       </thead>
+    </table>
+  </div>
+</body>
+</html>
