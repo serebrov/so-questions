@@ -1,5 +1,7 @@
 Various tests and stackoverflow questions
 
+- [PHP 7 return type hinting (why null is not allowed as a return value)](http://stackoverflow.com/questions/36544084/php-7-return-type-hinting/36596514#36596514)
+
 - [Creating a prototype for a function in JavaScript?](http://stackoverflow.com/questions/35911888/creating-a-prototype-for-a-function-in-javascript/35926412#35926412)
 
 - [About simple jQuery-based templating system](http://stackoverflow.com/questions/35536144/persuading-scripts-to-play-nicely-together/35656555)
