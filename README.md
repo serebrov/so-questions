@@ -1,5 +1,7 @@
 Various tests and stackoverflow questions
 
+- [What is a good example that shows the difference between OOP and procedural programming in Javascipt?](http://stackoverflow.com/q/36815518/4612064)
+
 - [Pygtk color for drag_highlight](http://stackoverflow.com/questions/34954500/pygtk-color-for-drag-highlight)
   - Code [./quick-test/pygtk-eventbox.py](./quick-test/pygtk-eventbox.py)
 
