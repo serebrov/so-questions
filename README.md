@@ -1,5 +1,8 @@
 Various tests and stackoverflow questions
 
+- [Pygtk color for drag_highlight](http://stackoverflow.com/questions/34954500/pygtk-color-for-drag-highlight)
+  - Code [./quick-test/pygtk-eventbox.py](./quick-test/pygtk-eventbox.py)
+
 - [PHP 7 return type hinting (why null is not allowed as a return value)](http://stackoverflow.com/questions/36544084/php-7-return-type-hinting/36596514#36596514)
 
 - [Creating a prototype for a function in JavaScript?](http://stackoverflow.com/questions/35911888/creating-a-prototype-for-a-function-in-javascript/35926412#35926412)
