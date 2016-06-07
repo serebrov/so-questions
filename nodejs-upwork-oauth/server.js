@@ -6,8 +6,8 @@ var qs = require('querystring');
 var oauthTest = module.exports = { }
 
 oauthTest.consumer = {
-    public: 'd143646921cb9e460f93abd971113c4a',
-    secret: '0cc3cd641cc79b68'
+    public: 'xxx',
+    secret: 'xxx'
 };
 oauthTest.oauth = OAuth({
     consumer: oauthTest.consumer,
