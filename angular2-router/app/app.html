@@ -1,0 +1,14 @@
+<nav class="rbe-plunk-nav">
+  <ul>
+    <li> <a [routerLink]="['/']">Homepage (def)</a> </li>
+    <li> <a [routerLink]="['/en/']">Homepage (en)</a> </li>
+    <li> <a [routerLink]="['/en/about']">About (en)</a> </li>
+    <li> <a [routerLink]="['/fr/']">Homepage (fr)</a> </li>
+    <li> <a [routerLink]="['/fr/about']">About (fr)</a> </li>
+  </ul>
+</nav>
+
+<main>
+  <router-outlet></router-outlet>
+  <!-- The router will put the content here, right after the outlet -->
+</main>
