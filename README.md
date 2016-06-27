@@ -1,5 +1,9 @@
 Various tests and stackoverflow questions
 
+- [Getting parent route parameters in Angular 2](http://stackoverflow.com/q/38030295/4612064)
+ - Code [./angular2-router]
+ - [Live demo (plunker)](http://plnkr.co/edit/ymlXIXGnuRdAVwMZsGVU?p=preview)
+
 - [How to structure / design events and tasks in a quest system to make code manageable?](http://stackoverflow.com/questions/37948215/how-to-structure-design-events-and-tasks-in-a-quest-system-to-make-code-manage/37955098#37955098)
 
 - [What is a good example that shows the difference between OOP and procedural programming in Javascipt?](http://stackoverflow.com/q/36815518/4612064)
