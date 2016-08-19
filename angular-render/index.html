@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-date-input-directive-production</title>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.1/angular.min.js"></script>
+</head>
+<script>
+ angular.module('preRenderExample', [])
+   .controller('MyController', ['$scope', function($scope) {
+     this.variableValue = 'test';
+     this.items = ['row1', 'row2', 'row3'];
+   }]);
+</script>
+<body ng-app="preRenderExample">
+  <div ng-controller="MyController as ctrl">
+    <span ng-bind="ctrl.variableValue">Static indexed value</span>
+    <ul ng-include="'your/dynamic/list'">
+        <li>seo-friendly item1</li>
+        <li>seo-friendly item2</li>
+    </ul>
+    <script type="text/ng-template" id="your/dynamic/list">
+        <li ng-repeat="item in ctrl.items" ng-bind="item"></li>
+    </script>
+  </div>
+</body>
+</html>
