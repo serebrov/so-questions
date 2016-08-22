@@ -1,5 +1,8 @@
 Various tests and stackoverflow questions
 
+- [Python / SQLAlchemy: Can I have SQLAlchemy do subquery eager loading without repeating the full original query?](http://stackoverflow.com/a/39073859/4612064)
+  - Code [./ssql-alchemy/eager_loading.py]
+
 - [PHP: Access to private properties of a child class from the parent class](http://stackoverflow.com/q/39056873/4612064)
   - There is also a comparison to C++ behavior
 
