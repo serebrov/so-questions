@@ -1,5 +1,8 @@
 Various tests and stackoverflow questions
 
+- [PHP: Access to private properties of a child class from the parent class](http://stackoverflow.com/q/39056873/4612064)
+  - There is also a comparison to C++ behavior
+
 - [Getting parent route parameters in Angular 2](http://stackoverflow.com/q/38030295/4612064)
  - Code [./angular2-router]
  - [Live demo (plunker)](http://plnkr.co/edit/ymlXIXGnuRdAVwMZsGVU?p=preview)
