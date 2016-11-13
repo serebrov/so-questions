@@ -61,3 +61,10 @@ if __name__ == "__main__":
     print o1.prevents, o2.prevents
     session.commit()
     print o1.prevents, o2.prevents
+
+    query = session.query(operation_to_operation)
+    # to apply the criteria to the `query` variable, it is necessary to
+    # do `query = query.filter_by`, because filter_by makes a copy of the
+    # original query object
+    query = query.filter_by(preventing_operation_id=o1.id)
+    print query.all()
