@@ -1,0 +1,22 @@
+<html><head>
+<script src="web-audio-test.js"></script> <!-- defines Instrument class -->
+</head>
+
+<body style="font-family:Arial;padding:36px 20%;">
+<h2>Web Audio Test</h2>
+
+<script>
+  //tremoloTest();
+
+  //var notes = getTrainingNotes();
+  var notes = getMoonlightNotesShort();
+  //var notes = getMoonlightNotes();
+
+  periodicWaveTest();
+  setTimeout(function() {
+    periodicWaveTest('bass', notes);
+  }, 11000);
+  setTimeout(function() {
+    periodicWaveTest('trombone', notes);
+  }, 22000);
+</script>

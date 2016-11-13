@@ -1,0 +1,138 @@
+<html><head>
+<script src="../../musical.js"></script> <!-- defines Instrument class -->
+</head>
+
+<body style="font-family:Arial;padding:36px 20%;">
+<h2>The Moonlight Sonata. <span></span></h2>
+
+<p>This web page is a demonstration of the use of
+<a href="https://github.com/PencilCode/musical.js">musical.js</a>
+with a plain script tag.
+For a song that uses more ABC notation features, see
+<a href="minuet.html">minuet</a>.</p>
+
+<p>Here is the code for this page:</p>
+
+<pre style="background:skyblue"></pre>
+
+<script>
+
+// Select a timbre that sounds like a piano.
+var inst = new Instrument({wave: 'piano', detune: 0});
+//var inst = new Instrument({wave: 'bass', detune: 0});
+//var inst = new Instrument({wave: 'guitar', detune: 0});
+//var inst = new Instrument({wave: 'noice', detune: 0});
+//var inst = new Instrument();
+
+// The song below is written in ABC notation.  More on abc
+// notation can be found at http://abcnotation.com/.
+var song =
+  "X: 1\n" +
+  "T:Beethoven's Moonlight Sonata, transcribed into ABC by David Bau.\n" +
+  "M:4/4\n" +
+  "L:1/8\n" +
+  "R:\n" +
+  "K:C#m\n" +
+  "[V:0]z8|\n" +
+  "[V:1]!pp!(3G,CE)(3G,CE)(3G,CE)(3G,CE)|\n" +
+  "[V:2][C,,C,]8|\n" +
+  "[V:0]z8|\n" +
+  "[V:1](3G,CE)(3G,CE)(3G,CE)(3G,CE)|\n" +
+  "[V:2][B,,,B,,]8|\n" +
+  "[V:0]z8|\n" +
+  "[V:1](3A,CE)(3A,CE)(3A,=DF)(3A,DF)|\n" +
+  "[V:2][A,,,A,,]4[F,,F,,,]4|\n" +
+  "[V:0]z8|\n" +
+  "[V:1](3G,^B,F)(3G,CE)(3G,CD)(3F,B,D)|\n" +
+  "[V:2][G,,,G,,]4[G,,G,,,]4|\n" +
+  "[V:0]z6G>G|\n" +
+  "[V:1](3E,G,C)(3G,CE)(3G,CE)(3G,CE)|\n" +
+  "[V:2][C,,G,,C,]8|\n" +
+  "[V:0]G6 G>G|\n" +
+  "[V:1](3G,DF)(3G,DF)(3G,DF)(3G,DF)|\n" +
+  "[V:2][^B,,,G,,^B,,]8|\n" +
+  "[V:0]G4 A4|\n" +
+  "[V:1](3G,CE)(3G,CE)(3A,CF)(3A,CF)|\n" +
+  "[V:2][^C,,C,]4[F,,,F,,]4|\n" +
+  "[V:0]G4 F2B2|\n" +
+  "[V:1](3G,B,E)(3G,B,E)(3A,B,D)(3A,B,D)|\n" +
+  "[V:2][B,,,B,,]4[B,,,B,,]4|\n" +
+  "[V:0]E2 z6|\n" +
+  "[V:1](3G,B,E)(3G,B,E)(3G,B,E)(3G,B,E)|\n" +
+  "[V:2][E,,E,]8|\n" +
+  "[V:0]z6 =G>G|\n" +
+  "[V:1](3=G,B,E)(3G,B,E)(3G,B,E)(3G,B,E)|\n" +
+  "[V:2][E,,E,]8|\n" +
+  "[V:0]=G6 =G>G|\n" +
+  "[V:1](3=G,B,=F)(3G,B,F)(3G,B,F)(3G,B,F)|\n" +
+  "[V:2][=D,,D,]8|\n" +
+  "[V:0]=G6 F2|\n" +
+  "[V:1](3=G,=CE)(3G,B,E)(3G,^CE)(3D,CE)|\n" +
+  "[V:2][=C,,C,]2[B,,,B,,]2[^A,,,A,,]4|\n" +
+  "[V:0]F4 =G2 E2|\n" +
+  "[V:1](3F,B,=D)(3F,B,D)(3=G,B,C)(3E,B,C)|\n" +
+  "[V:2][B,,,B,,]4 E,,2 =G,,2|\n" +
+  "[V:0]F4 F4|\n" +
+  "[V:1](3F,B,=D)(3F,B,D)(3F,^A,C)(3F,A,C)|\n" +
+  "[V:2][F,,]4 [F,,,F,,]4|\n" +
+  "[V:0]z6 B2|\n" + // Please continue me....
+  "[V:1](3B,=DF)(3B,DF)(3=B,^DF)(3B,DF)|\n" +
+  "[V:2][B,,,B,,]8|\n" +
+  "";
+
+var song =
+  "X: 1\n" +
+  "T:Beethoven's Moonlight Sonata, transcribed into ABC by David Bau.\n" +
+  "M:4/4\n" +
+  "L:1/8\n" +
+  "R:\n" +
+  "K:C#m\n" +
+  "[V:0]z8|\n" +
+  "[V:1]!pp!(3G,CE)(3G,CE)(3G,CE)(3G,CE)|\n" +
+  "[V:2][C,,C,]8|\n" +
+  "[V:0]z8|\n" +
+  "[V:1](3G,CE)(3G,CE)(3G,CE)(3G,CE)|\n" +
+  "[V:2][B,,,B,,]8|\n" +
+  "[V:0]z8|\n" +
+  "";
+
+// Play a song from a string in ABC notation.
+inst.play(song,
+  // The optional last argument is a callback when the song is done.
+  function() {
+    document.getElementsByTagName('span')[0].innerHTML = '(Done playing.)';
+  }
+);
+
+var pressed = {};
+// Optional, just for fun: listen to every note played.
+inst.on('noteon', function(e) {
+  pressed[e.midi] = true;
+  drawMidiNumbers();
+});
+// And listen to every note released.
+inst.on('noteoff', function(e) {
+  delete pressed[e.midi];
+  drawMidiNumbers();
+});
+function drawMidiNumbers() {
+  var k = [];
+  for (var midi in pressed) { k.push(midi); }
+  document.getElementsByTagName('span')[0].innerHTML =
+    '(midi #' + k.join(',') +')';
+}
+
+
+</script>
+
+<p>Minified, musical.js is about 17K, and it has no dependencies.
+It can also be used as an AMD or node.js modele.
+
+<script>
+// Also, show this document's source code.
+var pre = document.getElementsByTagName('pre')[0];
+pre.innerText = document.body.parentElement.outerHTML;
+pre.innerHTML = pre.innerHTML.replace(
+    /(new Instrument|\/musical\.js|\.play)(?![|\)])/gi,
+    '<b style="background:yellow">$1</b>');
+</script></p></body></html>

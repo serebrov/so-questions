@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="./gsynth.js"></script>
+  </head>
+  <body>
+
+    <script>
+      window.onload = function(){
+        guitar = new gsynth.GuitarSynth();
+
+        // a slowly picked E Major Chord:
+        var notes = [
+          { str: 5, fret: 0, duration: 1000 },
+          { str: 4, fret: 0, duration: 250 },
+          { str: 3, fret: 0, duration: 250 },
+          { str: 2, fret: 0, duration: 250 },
+          { str: 1, fret: 0, duration: 250 },
+          { str: 0, fret: 0, duration: 250 }
+        ];
+
+        function play(notes) {
+          note = notes.shift();
+          setTimeout(function() {
+            guitar.playNotes([{ str: note.str, fret: note.fret }]);
+            if (notes.length) {
+              play(notes);
+            }
+          }, note.duration);
+        }
+
+        play(notes);
+
+        // a slowly picked E Major Chord:
+        // setTimeout(function(){
+        //   guitar.playNotes([{ str: 5, fret: 0 }]);
+        //   setTimeout(function(){
+        //     guitar.playNotes([{ str: 4, fret: 0 }]);
+        //     setTimeout(function(){
+        //       guitar.playNotes([{ str: 3, fret: 0 }]);
+        //       setTimeout(function(){
+        //         guitar.playNotes([{ str: 2, fret: 0 }]);
+        //         setTimeout(function(){
+        //           guitar.playNotes([{ str: 1, fret: 0 }]);
+        //           setTimeout(function(){
+        //             guitar.playNotes([{ str: 0, fret: 0 }]);
+        //           },250);
+        //         },250);
+        //       },250);
+        //     },250);
+        //   },250);
+        // },1000);
+      };
+    </script>
+  </body>
+</html>
