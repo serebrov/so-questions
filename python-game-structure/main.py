@@ -1,5 +1,5 @@
-import game.chapter_two.main
 import game.chapter_one.main
+import game.chapter_two.main
 from game.engine import Engine, SceneMap
 
 print("Starting the engine...")
