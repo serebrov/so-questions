@@ -1,0 +1,16 @@
+ {
+    "apps": [
+        {
+            "name": "foo-main",
+            "script": "./index.js",
+        },
+        {
+            "name": "foo-bar",
+            "script": "./bar.js"
+        },
+        {
+            "name": "foo-baz",
+            "script": "./baz.js"
+        }
+    ]
+}
