@@ -37,12 +37,15 @@ if __name__ == "__main__":
     book2 = Book(name="book_a1_2", author_id=author._id)
     session.add(book2)
     session.commit()
+    print('book1', book1._id)
+    print('book2', book2._id)
+    print()
 
     query = session.query(Author)
     query = query.join(Author.books)
     query = query.filter(Book._id == book1._id)
     query = query.options(contains_eager(Author.books))
-    print(query.one().books)
+    print('Expect [book1]', [x._id for x in query.one().books])
     assert query.one().books[0]._id == book1._id
 
     query = session.query(Author)
@@ -51,5 +54,5 @@ if __name__ == "__main__":
     query = query.join(Author.books)
     query = query.filter(Book._id == book2._id)
     query = query.options(contains_eager(Author.books))
-    print(query.one().books)
+    print('Expect [book2]', [x._id for x in query.one().books])
     assert query.one().books[0]._id == book2._id
