@@ -40,8 +40,8 @@ if __name__ == "__main__":
 
     query = session.query(Author)
     query = query.join(Author.books)
-    query = query.options(contains_eager(Author.books))
     query = query.filter(Book._id == book1._id)
+    query = query.options(contains_eager(Author.books))
     print(query.one().books)
     assert query.one().books[0]._id == book1._id
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # it works with populate_existing()
     # query = session.query(Author).populate_existing()
     query = query.join(Author.books)
-    query = query.options(contains_eager(Author.books))
     query = query.filter(Book._id == book2._id)
+    query = query.options(contains_eager(Author.books))
     print(query.one().books)
     assert query.one().books[0]._id == book2._id
