@@ -5,6 +5,7 @@ node_modules/
 git-local-clone/
 
 quick-test/chromedriver*
+docker-postgres/pgdata*
 
 #ignore temp files
 error.tmp
