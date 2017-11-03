@@ -1,6 +1,10 @@
+# https://stackoverflow.com/questions/46993312/using-class-attribute-in-concurrent-futures-threads/47102957#47102957
+
+
 from concurrent.futures import ThreadPoolExecutor
 from random import random
 from time import sleep
+
 
 class main():
     def __init__(self):
@@ -18,9 +22,11 @@ class main():
         print('third', self.var)
         sleep(1)
 
+
 def worker():
     m = main()
     m.first()
+
 
 with ThreadPoolExecutor() as executor:
     executor.submit(worker)

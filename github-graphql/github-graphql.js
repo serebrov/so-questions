@@ -1,5 +1,7 @@
 'use strict';
 
+// The question was removed.
+
 const https = require('https');
 let fs = require('fs');
 
