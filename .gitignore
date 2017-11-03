@@ -16,6 +16,7 @@ dump.rdb
 *.orig
 .DS_Store
 .ctags
+.mypy_cache
 
 #compiled code
 *.pyc
