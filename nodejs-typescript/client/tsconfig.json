@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"outDir": "../dist/public",
+		"sourceMap": true,
+		"rootDir": "."
+	},
+	"files": [
+		"client.ts"
+	]
+}
