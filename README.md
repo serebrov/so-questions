@@ -3,6 +3,9 @@ Various tests and stackoverflow questions
 - [Clientside Javascript in Typescript Express projects](https://stackoverflow.com/q/47128397/4612064)
  - Code [./nodejs-typescript]
 
+- [Extract specific files from multiple 7-zip files](https://stackoverflow.com/q/41880854/4612064)
+ - Code [./bash_extract]
+
 - [Python / SQLAlchemy: Can I have SQLAlchemy do subquery eager loading without repeating the full original query?](http://stackoverflow.com/a/39073859/4612064)
   - Code [./ssql-alchemy/eager_loading.py]
 
