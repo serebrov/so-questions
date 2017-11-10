@@ -7,7 +7,7 @@ mkdir -p output
 # Unzip the zip archive.
 unzip data.zip -d output
 # For rar use
-#  unrar x data.rar output/rar
+#  unrar x data.rar output
 
 for archive in output/folder/*.7z
 do
