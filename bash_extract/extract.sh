@@ -25,6 +25,12 @@ do
     # to get files with single letter in brackets.
     extract_list=$(echo "$list" | grep "([A-Z])\.")
   fi
+  if [[ -z $extract_list ]]; then
+    # If we only have one file - extract it.
+    if [[ ${#list[@]} -eq 1 ]]; then
+      extract_list=$list
+    fi
+  fi
   if [[ ! -z $extract_list ]]; then
     # If we have files to extract, then do the extraction.
     # Output path is output/7zip_archive_name/
