@@ -8,6 +8,8 @@ mkdir -p output
 unzip data.zip -d output
 # For rar use
 #  unrar x data.rar output
+# or (in Cygwin there is no unrar, but we can use 7z)
+#  7z x -ooutput data.rar
 
 for archive in output/folder/*.7z
 do

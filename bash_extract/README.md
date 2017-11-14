@@ -37,7 +37,7 @@ The criteria I need is:
 
 **Solution**
 
-This solution is based on bash, not sure if it'll work on Cygwin, I tested it on Ubuntu.
+This solution is based on bash, it was tested and works on Cygwin and on Ubuntu.
 
 Since you have the conditional requirement to search for `(X) [!].ext` files first and if there are no such files then look for `(X).ext` files, I don't think it is possible to write some single expression to handle this logic.
 
