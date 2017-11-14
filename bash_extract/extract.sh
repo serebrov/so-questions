@@ -13,7 +13,7 @@ for archive in output/folder/*.7z
 do
   # See https://stackoverflow.com/questions/7148604
   # Get the list of file names, remove the extra output of "7z l"
-  list=$(7z l $archive | awk '
+  list=$(7z l "$archive" | awk '
       /----/ {p = ++p % 2; next}
       $NF == "Name" {pos = index($0,"Name")}
       p {print substr($0,pos)}
@@ -28,8 +28,8 @@ do
   if [[ ! -z $extract_list ]]; then
     # If we have files to extract, then do the extraction.
     # Output path is output/7zip_archive_name/
-    out_path=output/$(basename $archive)
-    mkdir -p $out_path
-    echo "$extract_list" | xargs -I {} 7z x -o$out_path $archive {}
+    out_path=output/$(basename "$archive")
+    mkdir -p "$out_path"
+    echo "$extract_list" | xargs -I {} 7z x -o"$out_path" "$archive" {}
   fi
 done
