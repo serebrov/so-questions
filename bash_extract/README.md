@@ -57,10 +57,12 @@ Here is the initial structure inside the zip/rar archive (I made a [script](http
     │   ├── (J) [b2].txt
     │   ├── (J) [o1].txt
     │   └── (J).txt
-    └── 7z_3.7z
-        ├── (E) [!].txt
-        ├── (J).txt
-        └── (U).txt
+    ├── 7z_3.7z
+    │   ├── (E) [!].txt
+    │   ├── (J).txt
+    │   └── (U).txt
+    └── 7z 4.7z
+        └── test.txt
 
 The output is this:
 
@@ -70,7 +72,9 @@ The output is this:
     │   └── (U) [!].txt
     ├── 7z_2.7z
     │   └── (J).txt       # Here there are no [!] files, so we extracted (J)
-    └── 7z_3.7z
-        └── (E) [!].txt   # We had here both [!] and (J), extracted only file with [!]
+    ├── 7z_3.7z
+    │   └── (E) [!].txt   # We had here both [!] and (J), extracted only file with [!]
+    └── 7z 4.7z
+        └── test.txt      # We had only one file here, extracted it
 
 And this is the [script](https://github.com/serebrov/so-questions/blob/master/bash_extract/extract.sh) to do the extraction.
