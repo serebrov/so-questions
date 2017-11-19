@@ -1,5 +1,7 @@
 Various tests and stackoverflow questions
 
+- [Is there any object-oriented approach or pattern to work with tabular data?](https://stackoverflow.com/questions/47303117)
+
 - [Clientside Javascript in Typescript Express projects](https://stackoverflow.com/q/47128397/4612064)
  - Code [./nodejs-typescript]
 
