@@ -6,6 +6,7 @@ git-local-clone/
 
 quick-test/chromedriver*
 docker-postgres/pgdata*
+mysql-group-by-vs-union/*.sql
 
 #ignore temp files
 error.tmp
