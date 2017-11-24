@@ -3,6 +3,10 @@ from random import randint
 """
 See https://stackoverflow.com/questions/47471521/union-vs-group-by-or-better-solution#47471521
 
+See also:
+- https://dev.mysql.com/doc/refman/5.7/en/group-by-optimization.html#loose-index-scan
+- https://mariadb.com/kb/en/library/minmax-optimization/
+
 Use as:
    python generate.py > test.sql
    cat test.sql | mysql -umyuser
