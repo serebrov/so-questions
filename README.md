@@ -1,5 +1,11 @@
 Various tests and stackoverflow questions
 
+- [Flask unittesting API requests (when using http auth)](https://stackoverflow.com/questions/47303117)
+ - Code [./python-flask-unittest]
+
+- [Create a Zip Archive from a cloned GitHub repo in Python](https://stackoverflow.com/questions/47578807)
+ - Code [./python-git-archive]
+
 - [Is there any object-oriented approach or pattern to work with tabular data?](https://stackoverflow.com/questions/47303117)
 
 - [Clientside Javascript in Typescript Express projects](https://stackoverflow.com/q/47128397/4612064)
