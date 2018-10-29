@@ -16,8 +16,7 @@ Various tests and stackoverflow questions
 - [PHP: Access to private properties of a child class from the parent class](http://stackoverflow.com/q/39056873/4612064), there is also a comparison to C++ behavior
 
 - [Getting parent route parameters in Angular 2](http://stackoverflow.com/q/38030295/4612064)
-  - Code [./angular2-router](./angular2-router)
-  - [Live demo (plunker)](http://plnkr.co/edit/ymlXIXGnuRdAVwMZsGVU?p=preview)
+  - Code [./angular2-router](./angular2-router), [live demo (plunker)](http://plnkr.co/edit/ymlXIXGnuRdAVwMZsGVU?p=preview)
 
 - [How to structure / design events and tasks in a quest system to make code manageable?](http://stackoverflow.com/questions/37948215/how-to-structure-design-events-and-tasks-in-a-quest-system-to-make-code-manage/37955098#37955098)
 
@@ -48,8 +47,7 @@ Various tests and stackoverflow questions
 
 - [What does “resolved” / “resolving” term actually mean in PHP?](http://stackoverflow.com/a/35189219/4612064)
 
-- [Is it possible to update a already created job in kue node js](http://stackoverflow.com/questions/34919808/is-it-possible-to-update-a-already-created-job-in-kue-node-js)
-  - Code [./nodejs-kue-test/](./nodejs-kue-test/)
+- [Is it possible to update a already created job in kue node js](http://stackoverflow.com/questions/34919808/is-it-possible-to-update-a-already-created-job-in-kue-node-js), code [./nodejs-kue-test/](./nodejs-kue-test/)
 
 - [Angular. How can I filter dynamic array in controller?](http://stackoverflow.com/a/35186340/4612064), code: [./angular-filter/](./angular-filter/)
 
@@ -87,14 +85,12 @@ Various tests and stackoverflow questions
 - [SQLAlchemy DELETE from many-to-many relationship](http://stackoverflow.com/q/34935348/4612064), code: [./sql-alchemy/many_many_delete_issue.py](./sql-alchemy/many_many_delete_issue.py)
 
 - [abnormal angularjs behaviour in validation forms forbid to pick a date that should be accepted](http://stackoverflow.com/questions/34906048/abnormal-angularjs-behaviour-in-validation-forms-forbid-to-pick-a-date-that-shou/34944246#34944246)
-  - Code: [./angular-date-min-max/index.html](./angular-date-min-max/index.html)
-  - [plunker demo](http://plnkr.co/edit/BBr668?p=preview)
+  - Code: [./angular-date-min-max/index.html](./angular-date-min-max/index.html), [plunker demo](http://plnkr.co/edit/BBr668?p=preview)
 
 - [Getting an array of column names at SheetJS](http://stackoverflow.com/a/34900620/4612064), [jsfiddle](https://jsfiddle.net/serebrov/cbxhcovz/1/)
 
-- [Uncaught SyntaxError: Unexpected token {](http://stackoverflow.com/a/34887630/4612064)
+- [Uncaught SyntaxError: Unexpected token {](http://stackoverflow.com/a/34887630/4612064), code: [./node-unexpected-error/](./node-unexpected-error/)
   - Note: it was more than just a syntax error, pretty tricky issue
-  - Code: [./node-unexpected-error/](./node-unexpected-error/)
 
 - [How to use createPeriodicWave instead of createScriptProcessor and getChannelData](http://stackoverflow.com/q/34226176/4612064)
 
