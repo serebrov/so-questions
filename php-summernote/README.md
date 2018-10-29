@@ -1,0 +1,1 @@
+Test setup for SO question: [Problem with Summernote showing image in editor only if it's uploaded in the same folder](https://stackoverflow.com/questions/53047061/problem-with-summernote-showing-image-in-editor-only-if-its-uploaded-in-the-sam/53048424#53048424).
