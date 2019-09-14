@@ -1,3 +1,7 @@
+"""
+Related so question:
+ https://stackoverflow.com/questions/12941416/how-to-count-rows-with-select-count-with-sqlalchemy
+"""
 from sqlalchemy import Column, Integer, String, Boolean, and_, func
 from sqlalchemy import ForeignKey
 
