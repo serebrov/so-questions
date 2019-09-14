@@ -9,5 +9,5 @@ repo = git.Repo.clone_from(
     'https://github.com/serebrov/nodejs-typescript.git',
     to_path=temppath)
 
-with open("archive.zip", "wb") as zipfile:
+with open("test.zip", "wb") as zipfile:
     repo.archive(zipfile, format='zip')
