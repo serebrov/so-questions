@@ -3,6 +3,10 @@ from base64 import b64encode
 import unittest
 
 
+# Helper API client to send auth headers in tests.
+# It only has `get` method and hard-coded user name / password, but can
+# easily be extended to support all HTTP methods and configurable auth data,
+# so authentication itself can also be tested.
 class ApiClient:
     """Performs API requests."""
 

@@ -2,8 +2,12 @@ from api import app, auth
 import unittest
 
 
+# Disable auth checks in tests.
 @auth.verify_password
 def verify_password(user, password):
+    """Overwrite password check.
+
+    This works even if we send no auth data."""
     return True
 
 
